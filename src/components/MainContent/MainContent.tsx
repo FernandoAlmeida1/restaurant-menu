@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
+import Collapse from '../Collapse/Collapse'; // Importando o componente Collapse
 import './MainContent.css';
 
 interface MenuItem {
@@ -65,6 +66,33 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                 />
               ))}
           </div>
+
+          <Collapse title="Burgers">
+            {filteredMenu?.sections
+              .filter(section => section.name === 'Burgers')
+              .map(section => (
+                <MenuSection
+                  key={section.id}
+                  name={section.name}
+                  items={section.items}
+                  isMobile={isMobile}
+                />
+              ))}
+          </Collapse>
+
+          <Collapse title="Drinks">
+            {filteredMenu?.sections
+              .filter(section => section.name === 'Drinks')
+              .map(section => (
+                <MenuSection
+                  key={section.id}
+                  name={section.name}
+                  items={section.items}
+                  isMobile={isMobile}
+                />
+              ))}
+          </Collapse>
+
         </div>
       )}
 
@@ -90,6 +118,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                       </div>
                     ))}
                   </div>
+                  
                   <div className="tab-content">
                     {filteredMenu?.sections
                       .filter(section => section.name === sections[activeTab].name)
@@ -102,6 +131,33 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                         />
                       ))}
                   </div>
+
+                  <Collapse title="Burgers">
+                    {filteredMenu?.sections
+                      .filter(section => section.name === 'Burgers')
+                      .map(section => (
+                        <MenuSection
+                          key={section.id}
+                          name={section.name}
+                          items={section.items}
+                          isMobile={isMobile}
+                        />
+                      ))}
+                  </Collapse>
+
+                  <Collapse title="Drinks">
+                    {filteredMenu?.sections
+                      .filter(section => section.name === 'Drinks')
+                      .map(section => (
+                        <MenuSection
+                          key={section.id}
+                          name={section.name}
+                          items={section.items}
+                          isMobile={isMobile}
+                        />
+                      ))}
+                  </Collapse>
+
                 </div>
               ) : (
                 <div className="tab-content">
@@ -119,7 +175,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
               )
             }
             width={isMobile ? '100%' : '600px'}
-            height={isMobile ? 'auto' : '1150px'}
+            height={isMobile ? 'auto' : 'auto'}
             opacity={1}
             mobile={isMobile}
           />

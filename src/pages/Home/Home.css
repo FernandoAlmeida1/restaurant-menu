@@ -2,3 +2,10 @@
     background-color: #EEEEEE; 
     min-height: 100vh;
   }
+
+  @media (max-width: 600px) {
+    .home-container {
+      background-color: #fff; 
+    }
+  }
+  
