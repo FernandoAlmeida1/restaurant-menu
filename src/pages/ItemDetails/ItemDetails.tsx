@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { testeTeste } from '../../services/api'; // Crie esta função no serviço
+import { fetchRestaurantMenu } from '../../services/api';
 
 const ItemDetails = () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const getItemDetails = async () => {
       try {
-        const data = await testeTeste();
+        const data = await fetchRestaurantMenu();
         const itemDetails = data?.sections
           .flatMap((section: any) => section.items)
           .find((item: any) => item.id === parseInt(id as string));

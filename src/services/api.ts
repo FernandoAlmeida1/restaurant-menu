@@ -6,7 +6,7 @@ export const fetchRestaurantDetails = async () => {
   return response.json();
 };
 
-export const testeTeste = async () => {
+export const fetchRestaurantMenu = async () => {
     const response = await fetch("/api/menu");
     if (!response.ok) {
       throw new Error("Failed to fetch menu details");

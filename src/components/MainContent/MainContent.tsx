@@ -71,7 +71,6 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
       <div className={`card-container-wrapper ${isMobile ? 'mobile' : ''}`}>
         <div className="card-container">
           <Card
-            title="Main Card"
             content={
               !isMobile ? (
                 <div>
@@ -120,7 +119,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
               )
             }
             width={isMobile ? '100%' : '600px'}
-            height={isMobile ? 'auto' : '1071px'}
+            height={isMobile ? 'auto' : '1150px'}
             opacity={1}
             mobile={isMobile}
           />

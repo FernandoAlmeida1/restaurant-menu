@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRestaurantDetails, testeTeste } from '../../services/api';
+import { fetchRestaurantDetails, fetchRestaurantMenu } from '../../services/api';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MainContent from '../../components/MainContent/MainContent';
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
         const restaurantData = await fetchRestaurantDetails();
         setRestaurant(restaurantData);
 
-        const menuData = await testeTeste();
+        const menuData = await fetchRestaurantMenu();
         setMenu(menuData);
         setFilteredMenu(menuData);
       } catch (err) {
@@ -83,11 +83,17 @@ const Home: React.FC = () => {
         onTabChange={handleTabChange}
       />
       <SearchBar onSearch={handleSearch} />
-      <MainContent
-        tabValue={tabValue}
-        filteredMenu={filteredMenu}
-        isMobile={isMobile}
-      />
+
+      {tabValue === 0 && (
+        <MainContent
+          tabValue={tabValue}
+          filteredMenu={filteredMenu}
+          isMobile={isMobile}
+        />
+      )}
+
+      {tabValue === 1 && <section><h2>Login</h2></section>}
+      {tabValue === 2 && <section><h2>Contact</h2></section>}
     </div>
   );
 };
