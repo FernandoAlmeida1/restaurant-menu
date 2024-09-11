@@ -1,7 +1,9 @@
 .header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  padding: 20px;
+  position: relative;
 }
 
 .drawer-button {
@@ -10,6 +12,18 @@
   border: none;
   cursor: pointer;
   color: #fff; 
+  position: absolute;
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: flex-start;
+  }
+
+  .drawer-button {
+    right: 0;
+  }
 }
 
 .banner-image {
