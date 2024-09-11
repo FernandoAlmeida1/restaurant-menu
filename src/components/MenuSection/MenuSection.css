@@ -1,0 +1,25 @@
+.menu-section {
+    margin: 20px 0;
+  }
+  
+  .menu-section h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .menu-section img {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .menu-section p {
+    color: #666;
+  }
+  
+  @media (max-width: 600px) {
+    .menu-section h3 {
+      font-size: 18px;
+    }
+  }
+  
