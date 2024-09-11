@@ -20,6 +20,21 @@
     .card-container {
         display: none;
     }
+
+    .tabs.mobile-tabs {
+        display: flex;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        overflow-x: auto; 
+    }
+
+    .tab-content {
+        padding: 16px;
+    }
+
+    .search-container {
+        margin-bottom: 16px;
+    }
 }
 
 .card {
@@ -85,4 +100,10 @@
 
 .tab-content {
     padding: 16px;
+}
+
+.mobile-tabs {
+    display: flex;
+    flex-direction: row; 
+    overflow-x: auto; 
 }

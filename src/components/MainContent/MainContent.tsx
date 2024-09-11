@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
-import './MainContent.css'; // Ensure correct CSS import
+import './MainContent.css';
 
 interface MenuItem {
   id: number;
   name: string;
   items: Array<{ name: string }>;
+  sections?: Array<{ id: number; name: string; items: Array<{ name: string }> }>;
 }
 
 interface MainContentProps {
@@ -22,10 +23,6 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     setActiveTab(index);
   };
 
-  const getSectionData = (name: string) => {
-    return filteredMenu?.sections.find(section => section.name === name);
-  };
-
   const sections = [
     { name: 'Burgers', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe4c64a6f.png' },
     { name: 'Drinks', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png' },
@@ -36,29 +33,78 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     <div className={`main-content-container ${isMobile ? 'mobile' : ''}`}>
       {tabValue === 1 && <section><h2>Login</h2></section>}
       {tabValue === 2 && <section><h2>Contact</h2></section>}
-      
+
+      {isMobile && (
+        <div>
+          <div className="tabs mobile-tabs">
+            {sections.map((section, index) => (
+              <div
+                key={index}
+                className={`tab ${activeTab === index ? 'active' : ''}`}
+                onClick={() => handleTabChange(index)}
+              >
+                <img
+                  src={section.image}
+                  alt={section.name}
+                  className="tab-image"
+                />
+                <div>{section.name}</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="tab-content">
+            {filteredMenu?.sections
+              .filter(section => section.name === sections[activeTab].name)
+              .map(section => (
+                <MenuSection
+                  key={section.id}
+                  name={section.name}
+                  items={section.items}
+                  isMobile={isMobile}
+                />
+              ))}
+          </div>
+        </div>
+      )}
+
       <div className={`card-container-wrapper ${isMobile ? 'mobile' : ''}`}>
         <div className="card-container">
           <Card
             title="Main Card"
             content={
-              <div>
-                <div className="tabs">
-                  {sections.map((section, index) => (
-                    <div
-                      key={index}
-                      className={`tab ${activeTab === index ? 'active' : ''}`}
-                      onClick={() => handleTabChange(index)}
-                    >
-                      <img
-                        src={section.image}
-                        alt={section.name}
-                        className="tab-image"
-                      />
-                      <div>{section.name}</div>
-                    </div>
-                  ))}
+              !isMobile ? (
+                <div>
+                  <div className="tabs">
+                    {sections.map((section, index) => (
+                      <div
+                        key={index}
+                        className={`tab ${activeTab === index ? 'active' : ''}`}
+                        onClick={() => handleTabChange(index)}
+                      >
+                        <img
+                          src={section.image}
+                          alt={section.name}
+                          className="tab-image"
+                        />
+                        <div>{section.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="tab-content">
+                    {filteredMenu?.sections
+                      .filter(section => section.name === sections[activeTab].name)
+                      .map(section => (
+                        <MenuSection
+                          key={section.id}
+                          name={section.name}
+                          items={section.items}
+                          isMobile={isMobile}
+                        />
+                      ))}
+                  </div>
                 </div>
+              ) : (
                 <div className="tab-content">
                   {filteredMenu?.sections
                     .filter(section => section.name === sections[activeTab].name)
@@ -71,7 +117,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                       />
                     ))}
                 </div>
-              </div>
+              )
             }
             width={isMobile ? '100%' : '600px'}
             height={isMobile ? 'auto' : '1071px'}
