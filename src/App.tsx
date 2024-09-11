@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { fetchRestaurantDetails, testeTeste } from "./services/api";
-import Tabs from "./components/Tabs/Tabs";
-import HamburgerMenu from "./components/Drawer/Drawer";
+import Header from "./components/Header/Header";
 import MenuSection from "./components/MenuSection/MenuSection";
+import SearchBar from "./components/SearchBar/SearchBar";
 import './App.css';
 
 function App() {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menu, setMenu] = useState<Menu | null>(null);
+  const [filteredMenu, setFilteredMenu] = useState<Menu | null>(null); // Estado para o menu filtrado
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tabValue, setTabValue] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const isMobile = window.innerWidth <= 600;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +23,7 @@ function App() {
 
         const menuData = await testeTeste();
         setMenu(menuData);
+        setFilteredMenu(menuData); // Inicialmente, o menu filtrado é o menu completo
       } catch (err) {
         setError("Erro ao carregar os dados");
       } finally {
@@ -33,8 +34,14 @@ function App() {
     fetchData();
   }, []);
 
-  if (loading) return <div>Carregando...</div>;
-  if (error) return <div>{error}</div>;
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTabChange = (newValue: number) => {
     setTabValue(newValue);
@@ -45,47 +52,41 @@ function App() {
     setDrawerOpen(!drawerOpen);
   };
 
+  const handleSearch = (query: string) => {
+    if (menu) {
+      const filtered = {
+        ...menu,
+        sections: menu.sections.map(section => ({
+          ...section,
+          items: section.items.filter(item =>
+            item.name.toLowerCase().includes(query.toLowerCase())
+          )
+        }))
+      };
+      setFilteredMenu(filtered);
+    }
+  };
+
+  if (loading) return <div>Carregando...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <div
-      style={{
-        backgroundColor: restaurant?.webSettings.backgroundColour,
-      }}
-    >
-      <header
-        style={{
-          backgroundColor: restaurant?.webSettings.navBackgroundColour,
-          color: restaurant?.webSettings.primaryColour,
-          position: "relative",
-          paddingBottom: isMobile ? "15px" : "20px",
-        }}
-      >
-        <div className="header-content">
-          {isMobile ? (
-            <HamburgerMenu
-              drawerOpen={drawerOpen}
-              toggleDrawer={toggleDrawer}
-              onTabChange={handleTabChange}
-            />
-          ) : (
-            <Tabs tabValue={tabValue} onTabChange={handleTabChange} />
-          )}
-        </div>
-        <img
-          src={restaurant?.webSettings.bannerImage}
-          alt="Banner"
-          style={{
-            width: "100%",
-            height: isMobile ? "150px" : "300px",
-            objectFit: "cover",
-          }}
-        />
-        <h1 style={{ fontSize: isMobile ? "20px" : "32px" }}>
-          {restaurant?.name}
-        </h1>
-      </header>
+    <div className="app-container">
+      <Header
+        bannerImage={restaurant?.webSettings.bannerImage || ""}
+        navBackgroundColour={restaurant?.webSettings.navBackgroundColour || ""}
+        primaryColour={restaurant?.webSettings.primaryColour || ""}
+        isMobile={isMobile}
+        drawerOpen={drawerOpen}
+        onToggleDrawer={toggleDrawer}
+        tabValue={tabValue}
+        onTabChange={handleTabChange}
+      />
+
+      <SearchBar onSearch={handleSearch} />
 
       <div style={{ width: "100%", paddingTop: isMobile ? "50px" : "60px" }}>
-        {tabValue === 0 && menu?.sections && menu.sections.map((section) => (
+        {tabValue === 0 && filteredMenu?.sections && filteredMenu.sections.map((section) => (
           <MenuSection
             key={section.id}
             name={section.name}

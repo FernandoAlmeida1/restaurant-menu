@@ -3,11 +3,38 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.app-container {
+  background-color: #EEEEEE; 
+  min-height: 100vh;
+}
+
 .header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px;
+  position: relative;
+}
+
+.tabs-container {
+  flex: 1;
+  display: flex;
+  justify-content: center; 
+}
+
+.drawer-button {
+  position: absolute;
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: flex-start;
+  }
+
+  .drawer-button {
+    right: 0;
+  }
 }
 
 img {
