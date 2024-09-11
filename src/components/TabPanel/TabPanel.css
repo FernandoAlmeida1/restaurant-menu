@@ -1,0 +1,12 @@
+.tabpanel {
+    display: none;
+  }
+  
+  .tabpanel.active {
+    display: block;
+  }
+  
+  .tabpanel-content {
+    padding: 16px;
+  }
+  
