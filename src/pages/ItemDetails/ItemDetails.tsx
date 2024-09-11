@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { testeTeste } from '../services/api'; // Crie esta função no serviço
+import { testeTeste } from '../../services/api'; // Crie esta função no serviço
 
 const ItemDetails = () => {
   const { id } = useParams();
