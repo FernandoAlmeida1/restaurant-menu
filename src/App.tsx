@@ -1,57 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { fetchRestaurantDetails, testeTeste } from "./services/api"; // Importando os dois endpoints
-
-interface WebSettings {
-  bannerImage: string;
-  backgroundColour: string;
-  primaryColour: string;
-  primaryColourHover: string;
-  navBackgroundColour: string;
-}
-
-interface Restaurant {
-  name: string;
-  webSettings: WebSettings;
-  address1: string;
-  address2: string;
-  city: string;
-  description: string;
-}
-
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string | null;
-  price: number;
-  images: { id: number; image: string }[];
-}
-
-interface MenuSection {
-  id: number;
-  name: string;
-  items: MenuItem[];
-}
-
-interface Menu {
-  id: number;
-  name: string;
-  sections: MenuSection[];
-}
+import { fetchRestaurantDetails, testeTeste } from "./services/api";
+import Tabs from "./components/Tabs/Tabs";
+import HamburgerMenu from "./components/Drawer/Drawer";
+import MenuSection from "./components/MenuSection/MenuSection";
+import './App.css';
 
 function App() {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menu, setMenu] = useState<Menu | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tabValue, setTabValue] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const isMobile = window.innerWidth <= 600;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Carregar detalhes do restaurante
         const restaurantData = await fetchRestaurantDetails();
         setRestaurant(restaurantData);
 
-        // Carregar menu
         const menuData = await testeTeste();
         setMenu(menuData);
       } catch (err) {
@@ -67,53 +36,66 @@ function App() {
   if (loading) return <div>Carregando...</div>;
   if (error) return <div>{error}</div>;
 
+  const handleTabChange = (newValue: number) => {
+    setTabValue(newValue);
+    setDrawerOpen(false);
+  };
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
   return (
-    <div style={{ backgroundColor: restaurant?.webSettings.backgroundColour }}>
-      {/* Informações do Restaurante */}
+    <div
+      style={{
+        backgroundColor: restaurant?.webSettings.backgroundColour,
+      }}
+    >
       <header
         style={{
           backgroundColor: restaurant?.webSettings.navBackgroundColour,
           color: restaurant?.webSettings.primaryColour,
+          position: "relative",
+          paddingBottom: isMobile ? "15px" : "20px",
         }}
       >
-        <img src={restaurant?.webSettings.bannerImage} alt="Banner" />
-        <h1>{restaurant?.name}</h1>
+        <div className="header-content">
+          {isMobile ? (
+            <HamburgerMenu
+              drawerOpen={drawerOpen}
+              toggleDrawer={toggleDrawer}
+              onTabChange={handleTabChange}
+            />
+          ) : (
+            <Tabs tabValue={tabValue} onTabChange={handleTabChange} />
+          )}
+        </div>
+        <img
+          src={restaurant?.webSettings.bannerImage}
+          alt="Banner"
+          style={{
+            width: "100%",
+            height: isMobile ? "150px" : "300px",
+            objectFit: "cover",
+          }}
+        />
+        <h1 style={{ fontSize: isMobile ? "20px" : "32px" }}>
+          {restaurant?.name}
+        </h1>
       </header>
 
-      <div>
-        <p>
-          Endereço: {restaurant?.address1}, {restaurant?.address2}
-        </p>
-        <p>Cidade: {restaurant?.city}</p>
-        <p>
-          Descrição: {restaurant?.description || "Nenhuma descrição disponível"}
-        </p>
-      </div>
-
-      {/* Exibição do Menu */}
-      <section>
-        <h2>Menu</h2>
-        {menu?.sections && menu.sections.map((section) => (
-  <div key={section.id}>
-    <h3>{section.name}</h3>
-    {section.items && section.items.map((item) => (
-      <div key={item.id} style={{ marginBottom: "20px" }}>
-        <h4>{item.name}</h4>
-        <p>{item.description || "Sem descrição"}</p>
-        <p>Preço: R$ {item.price.toFixed(2)}</p>
-        {item.images && item.images.length > 0 && (
-          <img
-            src={item.images[0].image}
-            alt={item.name}
-            style={{ width: "100px", height: "100px" }}
+      <div style={{ width: "100%", paddingTop: isMobile ? "50px" : "60px" }}>
+        {tabValue === 0 && menu?.sections && menu.sections.map((section) => (
+          <MenuSection
+            key={section.id}
+            name={section.name}
+            items={section.items}
+            isMobile={isMobile}
           />
-        )}
+        ))}
+        {tabValue === 1 && <section><h2>Entrar</h2></section>}
+        {tabValue === 2 && <section><h2>Contato</h2></section>}
       </div>
-    ))}
-  </div>
-))}
-
-      </section>
     </div>
   );
 }
