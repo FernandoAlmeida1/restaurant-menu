@@ -19,9 +19,15 @@ interface ModalProps {
       }[];
     }[];
   } | null;
+  onAddToOrder: (itemId: number) => void; // Nova prop para adicionar ao pedido
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  item,
+  onAddToOrder,
+}) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -39,7 +45,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
     if (!item.modifiers || selectedOption === null) return 0;
 
     for (const modifier of item.modifiers) {
-      const selected = modifier.items.find((option) => option.id === selectedOption);
+      const selected = modifier.items.find(
+        (option) => option.id === selectedOption
+      );
       if (selected) {
         return selected.price;
       }
@@ -48,6 +56,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
   };
 
   const totalPrice = (item.price + getSelectedOptionPrice()) * quantity;
+
+  const handleAddToOrder = () => {
+    onAddToOrder(item.id);
+  };
 
   return (
     <div className="modal-overlay">
@@ -70,12 +82,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
           {item.modifiers &&
             item.modifiers.map((modifier) => (
               <div key={modifier.name}>
-                <div
-                  style={{
-                    padding: "8px",
-                    background: "#F8F9FA",
-                  }}
-                >
+                <div style={{ padding: "8px", background: "#F8F9FA" }}>
                   <h2 className="modifier-name">{modifier.name}</h2>
                   <p className="select-option">Select 1 option</p>
                 </div>
@@ -102,7 +109,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
               </div>
             ))}
         </div>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backdropFilter: "blur(10px)"}}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <div className="modal-quantity-container">
             <button
               className="modal-quantity-button-subtraction"
@@ -118,8 +132,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item }) => {
               +
             </button>
           </div>
-          <button className="modal-add-to-order-button">
-            Add to Order  •  R$ {totalPrice.toFixed(2)}
+          <button
+            className="modal-add-to-order-button"
+            onClick={handleAddToOrder}
+          >
+            Add to Order • R$ {totalPrice.toFixed(2)}
           </button>
         </div>
       </div>

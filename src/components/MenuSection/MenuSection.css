@@ -53,3 +53,16 @@
     font-size: 18px;
   }
 }
+
+.item-quantity-circle {
+  display: inline-block;
+  background-color: #4F372F;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  margin-right: 10px; 
+}

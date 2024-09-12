@@ -181,7 +181,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
           />
           {!isMobile && (
             <Card
-              title="Cart Card"
+              title="Carrinho"
               content={<div>Cart card content</div>}
               width={isMobile ? '100%' : '320px'}
               height={isMobile ? 'auto' : '129px'}

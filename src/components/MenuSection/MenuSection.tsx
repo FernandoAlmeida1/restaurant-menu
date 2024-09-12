@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from '../Modal/Modal'; // Importar o Modal
+import Modal from "../Modal/Modal";
 import './MenuSection.css';
 
 interface MenuSectionProps {
@@ -23,6 +23,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
     images: { id: number; image: string }[];
   }>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addedItems, setAddedItems] = useState<number[]>([]);
 
   const handleItemClick = (item: {
     id: number;
@@ -40,6 +41,11 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
     setSelectedItem(null);
   };
 
+  const handleAddToOrder = (itemId: number) => {
+    setAddedItems((prev) => [...prev, itemId]); 
+    closeModal(); 
+  };
+
   return (
     <div className="menu-section">
       <h3>{name}</h3>
@@ -47,10 +53,17 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
         <div
           key={item.id}
           className="menu-item"
-          onClick={() => handleItemClick(item)} // Adiciona o evento de clique
+          onClick={() => handleItemClick(item)} 
         >
           <div className="menu-item-details">
-            <h4 className="menu-item-name">{item.name}</h4>
+          <h4 className="menu-item-name">
+            {addedItems.includes(item.id) && (
+              <span className="item-quantity-circle">
+                {addedItems.filter(id => id === item.id).length}
+              </span>
+            )}
+            {item.name}
+          </h4>
             <p className="menu-item-description">
               {item.description && item.description.length > 20
                 ? `${item.description.substring(0, 52)}...`
@@ -72,6 +85,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         item={selectedItem}
+        onAddToOrder={handleAddToOrder} 
       />
     </div>
   );
