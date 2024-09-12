@@ -70,18 +70,21 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
     closeModal();
   };
 
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
   const handleUpdateCartQuantity = (itemId: number, amount: number) => {
     setCart((prev) => {
       return prev.map((item) =>
         item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
-      ).filter(item => item.quantity > 0); // Remover itens com quantidade 0 ou negativa
+      ).filter(item => item.quantity > 0); 
     });
   };
 
+  const calculateSubtotal = () => {
+    return cart.reduce((subtotal, item) => subtotal + item.price * item.quantity, 0);
+  };
+
+  const calculateTotal = () => {
+    return calculateSubtotal(); 
+  };
   return (
     <div className="menu-section">
       <h3>{name}</h3>
@@ -138,6 +141,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
             </li>
           ))}
         </ul>
+        <p>Subtotal: R${calculateSubtotal().toFixed(2)}</p>
         <p>Total: R${calculateTotal().toFixed(2)}</p>
       </div>
     </div>
