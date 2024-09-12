@@ -12,40 +12,47 @@
   
   .modal-content {
     background: white;
-    padding: 20px;
     border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 480px;
+    height: 90vh;
     position: relative;
-    text-align: center;
+    overflow-y: auto;
   }
   
   .modal-close-button {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: none;
-    border: none;
+    background: #fff;
     font-size: 24px;
+    cursor: pointer;
+    border-radius: 50px;
+  }
+  
+  .modal-close-button {
+    width: 28px;
+    height: 28px;
+    padding: 8px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px; 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
     cursor: pointer;
   }
   
-  .modal-item-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 15px;
-    border-radius: 4px;
-  }
-  
   .modal-item-name {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 18px;
     color: #121212;
   }
   
   .modal-item-description {
     font-size: 16px;
-    margin-bottom: 15px;
+    margin-top: -10px;
     color: #464646;
   }
   
@@ -60,6 +67,11 @@
     font-size: 18px;
     font-weight: bold;
   }
+
+  .modal-item-image {
+    width: 100%;
+    height: auto;
+  }
   
   .modal-quantity-container {
     display: flex;
@@ -68,12 +80,32 @@
     margin-bottom: 20px;
   }
   
-  .modal-quantity-button {
-    background: #e0e0e0;
-    border: none;
+  .modal-quantity-button-subtraction {
+    background: #DADADA;
     padding: 10px;
     font-size: 18px;
     cursor: pointer;
+    display: flex;
+    width: 25px;
+    border-radius: 50px;
+    align-items: center;
+    color: #5F5F5F;
+    justify-content: center;
+    height: 25px;
+  }
+
+  .modal-quantity-button-addition {
+    background: #4F372F;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    width: 25px;
+    border-radius: 50px;
+    align-items: center;
+    color: #fff;
+    justify-content: center;
+    height: 25px;
   }
   
   .modal-quantity {
@@ -82,12 +114,52 @@
   }
   
   .modal-add-to-order-button {
-    background-color: #f56c6c;
+    background-color: #4F372F;
     color: white;
-    border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 40px;
     font-size: 18px;
     cursor: pointer;
+    width: 90%;
   }
   
+.modifier-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.select-option {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.modifier-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;  
+}
+
+.modifier-option-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-name {
+  font-size: 16px;
+  margin: 0;
+}
+
+.option-price {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.radio-group-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
