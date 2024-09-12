@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../Modal/Modal";
+import QuantityControl from "../QuantityControl/QuantityControl";
 import './MenuSection.css';
 
 interface MenuSectionProps {
@@ -14,6 +15,13 @@ interface MenuSectionProps {
   isMobile: boolean;
 }
 
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
   const [selectedItem, setSelectedItem] = useState<null | {
     id: number;
@@ -24,6 +32,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
   }>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedItems, setAddedItems] = useState<number[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const handleItemClick = (item: {
     id: number;
@@ -41,9 +50,36 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
     setSelectedItem(null);
   };
 
-  const handleAddToOrder = (itemId: number) => {
+  const handleAddToOrder = (itemId: number, quantity: number) => {
     setAddedItems((prev) => [...prev, itemId]); 
-    closeModal(); 
+    const item = items.find((item) => item.id === itemId);
+    if (item) {
+      setCart((prev) => {
+        const existingItem = prev.find((cartItem) => cartItem.id === itemId);
+        if (existingItem) {
+          return prev.map((cartItem) =>
+            cartItem.id === itemId
+              ? { ...cartItem, quantity: cartItem.quantity + quantity }
+              : cartItem
+          );
+        } else {
+          return [...prev, { id: itemId, name: item.name, price: item.price, quantity }];
+        }
+      });
+    }
+    closeModal();
+  };
+
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const handleUpdateCartQuantity = (itemId: number, amount: number) => {
+    setCart((prev) => {
+      return prev.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
+      ).filter(item => item.quantity > 0); // Remover itens com quantidade 0 ou negativa
+    });
   };
 
   return (
@@ -53,17 +89,17 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
         <div
           key={item.id}
           className="menu-item"
-          onClick={() => handleItemClick(item)} 
+          onClick={() => handleItemClick(item)}
         >
           <div className="menu-item-details">
-          <h4 className="menu-item-name">
+            <h4 className="menu-item-name">
             {addedItems.includes(item.id) && (
               <span className="item-quantity-circle">
                 {addedItems.filter(id => id === item.id).length}
               </span>
             )}
-            {item.name}
-          </h4>
+              {item.name}
+            </h4>
             <p className="menu-item-description">
               {item.description && item.description.length > 20
                 ? `${item.description.substring(0, 52)}...`
@@ -85,8 +121,25 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         item={selectedItem}
-        onAddToOrder={handleAddToOrder} 
+        onAddToOrder={(itemId, quantity) => handleAddToOrder(itemId, quantity)}
       />
+
+      <div className="cart">
+        <h4>Cart</h4>
+        <ul>
+          {cart.map((item) => (
+            <li key={item.id}>
+              {item.name} - 
+              <QuantityControl 
+                quantity={item.quantity} 
+                onChange={(amount) => handleUpdateCartQuantity(item.id, amount)} 
+              />
+              {item.quantity} x R${item.price.toFixed(2)} = R${(item.price * item.quantity).toFixed(2)}
+            </li>
+          ))}
+        </ul>
+        <p>Total: R${calculateTotal().toFixed(2)}</p>
+      </div>
     </div>
   );
 };

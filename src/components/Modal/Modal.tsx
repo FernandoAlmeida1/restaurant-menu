@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import QuantityControl from "../QuantityControl/QuantityControl";
 import "./Modal.css";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   item: {
+    id: number;
     name: string;
     description: string | null;
     price: number;
@@ -19,7 +21,7 @@ interface ModalProps {
       }[];
     }[];
   } | null;
-  onAddToOrder: (itemId: number) => void; // Nova prop para adicionar ao pedido
+  onAddToOrder: (itemId: number, quantity: number) => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -58,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({
   const totalPrice = (item.price + getSelectedOptionPrice()) * quantity;
 
   const handleAddToOrder = () => {
-    onAddToOrder(item.id);
+    onAddToOrder(item.id, quantity);
   };
 
   return (
@@ -117,21 +119,7 @@ const Modal: React.FC<ModalProps> = ({
             alignItems: "center",
           }}
         >
-          <div className="modal-quantity-container">
-            <button
-              className="modal-quantity-button-subtraction"
-              onClick={() => handleQuantityChange(-1)}
-            >
-              -
-            </button>
-            <span className="modal-quantity">{quantity}</span>
-            <button
-              className="modal-quantity-button-addition"
-              onClick={() => handleQuantityChange(1)}
-            >
-              +
-            </button>
-          </div>
+        <QuantityControl quantity={quantity} onChange={(amount) => setQuantity(quantity + amount)} />
           <button
             className="modal-add-to-order-button"
             onClick={handleAddToOrder}
