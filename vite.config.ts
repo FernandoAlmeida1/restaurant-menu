@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   server: {
     proxy: {
       '/api/menu': {
@@ -10,4 +12,11 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: 'esnext',
+    outDir: 'dist',   
+    rollupOptions: {
+      input: 'src/main.tsx', 
+    }
+  }
 });

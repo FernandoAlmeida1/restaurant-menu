@@ -3,10 +3,11 @@
     "module": "CommonJS",
     "target": "ES2020",
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true 
   },
   "include": ["src"]
 }
