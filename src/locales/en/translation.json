@@ -3,5 +3,7 @@
   "error": "Error loading data",
   "login": "Login",
   "contact": "Contact",
-  "search_placeholder": "Search menu items"
+  "search_placeholder": "Search menu items",
+  "menu": "Menu",
+  "banner_alt": "Banner"
 }

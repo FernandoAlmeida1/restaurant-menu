@@ -3,6 +3,7 @@
   "error": "Erro ao carregar os dados",
   "login": "Login",
   "contact": "Contato",
-  "search_placeholder": "Buscar itens do menu"
+  "search_placeholder": "Buscar itens do menu",
+  "menu": "Menu",
+  "banner_alt": "Banner"
 }
-

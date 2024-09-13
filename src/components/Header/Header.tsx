@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next'; 
 import Tabs from "../Tabs/Tabs";
 import Drawer from "../Drawer/Drawer";
 import "./Header.css";
@@ -24,14 +25,16 @@ const Header: React.FC<HeaderProps> = ({
   tabValue,
   onTabChange,
 }) => {
+  const { t } = useTranslation(); 
+
   const getSelectedTabName = (tabValue: number) => {
     switch (tabValue) {
       case 0:
-        return "Menu";
+        return t("menu"); 
       case 1:
-        return "Entrar";
+        return t("login"); 
       case 2:
-        return "Contato";
+        return t("contact");
       default:
         return "";
     }
@@ -66,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({
 
       <img
         src={bannerImage}
-        alt="Banner"
+        alt={t('banner_alt', { defaultValue: 'Banner' })}
         className="banner-image"
         style={{
           width: "100%",
