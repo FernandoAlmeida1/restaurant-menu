@@ -12,7 +12,6 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({
-  title,
   content,
   width,
   height,
@@ -22,7 +21,6 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div className={`card ${mobile ? 'card-mobile' : 'card-desktop'}`} style={{ width, height, opacity, gap }}>
-      <h3>{title}</h3>
       <div className="card-content">{content}</div>
     </div>
   );

@@ -1,5 +1,6 @@
-import React from 'react';
-import QuantityControl from '../QuantityControl/QuantityControl';
+import React from "react";
+import QuantityControl from "../QuantityControl/QuantityControl";
+import "./Cart.css";
 
 interface CartItem {
   id: number;
@@ -19,25 +20,41 @@ const Cart: React.FC<CartProps> = ({
   cart,
   handleUpdateCartQuantity,
   calculateSubtotal,
-  calculateTotal
+  calculateTotal,
 }) => {
+  const isEmpty = cart.length === 0;
+
   return (
     <div className="cart">
-      <h4>Carrinho</h4>
-      <ul>
-        {cart.map((item) => (
-          <li key={item.id}>
-            {item.name} - 
-            <QuantityControl 
-              quantity={item.quantity} 
-              onChange={(amount) => handleUpdateCartQuantity(item.id, amount)} 
-            />
-            {item.quantity} x R${item.price.toFixed(2)} = R${(item.price * item.quantity).toFixed(2)}
-          </li>
-        ))}
-      </ul>
-      <p>Subtotal: R${calculateSubtotal().toFixed(2)}</p>
-      <p>Total: R${calculateTotal().toFixed(2)}</p>
+      <span className="cart-title">Carrinho</span>
+      {isEmpty ? (
+        <p className="cart-empty-message">Seu carrinho está vazio</p>
+      ) : (
+        <>
+          {cart.map((item) => (
+            <div className="cart-item" key={item.id}>
+              <div className="cart-item-details">
+                <span className="cart-item-name">{item.name}</span>
+                <QuantityControl
+                  quantity={item.quantity}
+                  onChange={(amount) => handleUpdateCartQuantity(item.id, amount)}
+                />
+              </div>
+              <span className="cart-item-price">
+                R$ {(item.price * item.quantity).toFixed(2)}
+              </span>
+            </div>
+          ))}
+          <div className="cart-total-subtotal">
+            <p>Subtotal: </p>
+            <p>R${calculateSubtotal().toFixed(2)}</p>
+          </div>
+          <div className="cart-total-subtotal">
+            <p className="cart-title-calculation">Total:</p>
+            <p className="cart-value-calculation">R${calculateTotal().toFixed(2)}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };

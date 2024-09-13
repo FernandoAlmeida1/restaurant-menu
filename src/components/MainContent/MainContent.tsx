@@ -226,7 +226,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
           <div className="main-content">
             {!isMobile && (
               <Card
-                title="Cart"
+                title="Carrinho"
                 content={
                   <Cart
                     cart={cart}
@@ -236,7 +236,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                   />
                 }
                 width={isMobile ? '100%' : '320px'}
-                height={isMobile ? 'auto' : '129px'}
+                height={isMobile ? 'auto' : 'auto'}
                 gap={isMobile ? '0' : '1px'}
                 opacity={1}
                 mobile={isMobile}

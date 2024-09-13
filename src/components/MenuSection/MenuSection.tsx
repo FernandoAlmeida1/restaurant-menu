@@ -20,6 +20,7 @@ interface MenuSectionProps {
 const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart }) => {
   const [selectedItem, setSelectedItem] = useState<null | MenuItem>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addedItems, setAddedItems] = useState<number[]>([]);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);
@@ -32,6 +33,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
   };
 
   const handleAddToOrder = (itemId: number, quantity: number) => {
+    setAddedItems((prev) => [...prev, itemId]); 
     const item = items.find((item) => item.id === itemId);
     if (item) {
       handleAddToCart(item.id, item.name, item.price, quantity);
@@ -46,13 +48,20 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
         items.map((item) => (
           <div key={item.id} className="menu-item" onClick={() => handleItemClick(item)}>
             <div className="menu-item-details">
-              <h4 className="menu-item-name">{item.name}</h4>
+            <h4 className="menu-item-name">
+            {addedItems.includes(item.id) && (
+              <span className="item-quantity-circle">
+                {addedItems.filter(id => id === item.id).length}
+              </span>
+            )}
+              {item.name}
+            </h4>
               <p className="menu-item-description">
               {item.description && item.description.length > 20
                 ? `${item.description.substring(0, 52)}...`
                 : item.description || "Sem descrição"}
             </p>
-              <p>R${item.price.toFixed(2)}</p>
+              <p className="menu-item-price">R${item.price.toFixed(2)}</p>
             </div>
             {item.images && item.images.length > 0 && (
               <img src={item.images[0].image} alt={item.name} className="menu-item-image" />
