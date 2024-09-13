@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; 
 import { fetchRestaurantDetails, fetchRestaurantMenu } from '../../services/api';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -32,6 +33,7 @@ export interface Menu {
 }
 
 const Home: React.FC = () => {
+  const { t } = useTranslation(); 
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menu, setMenu] = useState<Menu | null>(null);
   const [filteredMenu, setFilteredMenu] = useState<Menu | null>(null);
@@ -51,14 +53,14 @@ const Home: React.FC = () => {
         setMenu(menuData);
         setFilteredMenu(menuData);
       } catch {
-        setError("Erro ao carregar os dados");
+        setError(t("error")); 
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -93,7 +95,7 @@ const Home: React.FC = () => {
     }
   };
 
-  if (loading) return <div>Carregando...</div>;
+  if (loading) return <div>{t("loading")}</div>;
   if (error) return <div>{error}</div>;
 
   return (
@@ -118,8 +120,8 @@ const Home: React.FC = () => {
         />
       )}
 
-      {tabValue === 1 && <section><h2>Login</h2></section>}
-      {tabValue === 2 && <section><h2>Contact</h2></section>}
+      {tabValue === 1 && <section><h2>{t("login")}</h2></section>}
+      {tabValue === 2 && <section><h2>{t("contact")}</h2></section>} 
     </div>
   );
 };
