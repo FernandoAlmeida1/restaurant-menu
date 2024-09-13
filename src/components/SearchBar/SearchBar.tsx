@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -6,6 +7,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const { t } = useTranslation(); 
   const [query, setQuery] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         type="text"
         value={query}
         onChange={handleChange}
-        placeholder="Search menu items"
+        placeholder={t('search_placeholder')} 
       />
     </div>
   );
