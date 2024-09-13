@@ -36,7 +36,7 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false); // Estado para o modal
+  const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false);
 
   const handleAddToCart = (itemId: number, name: string, price: number, quantity: number) => {
     setCart((prev) => {
@@ -87,6 +87,10 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     return filteredMenu?.sections?.filter(section => section.name === name) || [];
   };
 
+  const handleCheckout = () => {
+    console.log("Checkout process initiated");
+  };
+  
   return (
     <div className={`main-content-container ${isMobile ? 'mobile' : ''}`}>
       {tabValue === 1 && <section><h2>Login</h2></section>}
@@ -154,6 +158,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             handleUpdateCartQuantity={handleUpdateCartQuantity}
             calculateSubtotal={calculateSubtotal}
             calculateTotal={calculateTotal}
+            onCheckout={handleCheckout}
           />
         </>
       )}

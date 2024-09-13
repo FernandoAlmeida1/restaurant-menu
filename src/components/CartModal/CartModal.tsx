@@ -16,6 +16,7 @@ interface CartProps {
   calculateTotal: () => number;
   isOpen: boolean;
   onClose: () => void;
+  onCheckout: () => void; 
 }
 
 const CartModal: React.FC<CartProps> = ({
@@ -24,11 +25,17 @@ const CartModal: React.FC<CartProps> = ({
   calculateSubtotal,
   calculateTotal,
   isOpen,
-  onClose
+  onClose,
+  onCheckout
 }) => {
   const isEmpty = cart.length === 0;
 
   if (!isOpen) return null;
+
+  const handleCheckout = () => {
+    onCheckout(); 
+    onClose(); 
+  };
 
   return (
     <div className="cart-modal-overlay" onClick={onClose}>
@@ -60,7 +67,8 @@ const CartModal: React.FC<CartProps> = ({
               <p className="cart-title-calculation">Total:</p>
               <p className="cart-value-calculation">R${calculateTotal().toFixed(2)}</p>
             </div>
-            <button className="cart-close-button" onClick={onClose}>Fechar</button>
+            <button className="cart-checkout-button" onClick={handleCheckout}>Checkout Now</button>
+            <button className="cart-close-button" onClick={onClose}>&times;</button>
           </>
         )}
       </div>
