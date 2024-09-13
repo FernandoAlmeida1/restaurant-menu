@@ -11,7 +11,7 @@ interface MenuItem {
 }
 
 interface MenuSectionProps {
-  name: string;
+  name?: string;
   items: MenuItem[];
   handleAddToCart: (itemId: number, name: string, price: number, quantity: number) => void;
   isMobile?: boolean;
@@ -46,8 +46,12 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
         items.map((item) => (
           <div key={item.id} className="menu-item" onClick={() => handleItemClick(item)}>
             <div className="menu-item-details">
-              <h4>{item.name}</h4>
-              <p>{item.description || "Sem descrição"}</p>
+              <h4 className="menu-item-name">{item.name}</h4>
+              <p className="menu-item-description">
+              {item.description && item.description.length > 20
+                ? `${item.description.substring(0, 52)}...`
+                : item.description || "Sem descrição"}
+            </p>
               <p>R${item.price.toFixed(2)}</p>
             </div>
             {item.images && item.images.length > 0 && (

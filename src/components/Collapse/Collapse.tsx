@@ -16,7 +16,7 @@ const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
   return (
     <div className="collapse-container">
       <div className="collapse-header" onClick={toggleCollapse}>
-        <span>{title}</span>
+        <h3 className="menu-section">{title}</h3>
         <span className={`arrow-icon ${isOpen ? 'open' : ''}`}>
           <svg
             width="16"

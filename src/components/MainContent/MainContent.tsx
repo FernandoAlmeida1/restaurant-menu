@@ -184,7 +184,6 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     {getFilteredSections('Burgers').map(section => (
                       <MenuSection
                         key={section.id}
-                        name={section.name}
                         items={section.items}
                         isMobile={isMobile}
                         handleAddToCart={handleAddToCart}
@@ -196,7 +195,6 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     {getFilteredSections('Drinks').map(section => (
                       <MenuSection
                         key={section.id}
-                        name={section.name}
                         items={section.items}
                         isMobile={isMobile}
                         handleAddToCart={handleAddToCart}
