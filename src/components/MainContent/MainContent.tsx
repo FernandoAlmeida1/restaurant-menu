@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
+import Cart from "../Cart/Cart";
 import Collapse from '../Collapse/Collapse'; 
 import './MainContent.css';
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 interface MenuItem {
   id: number;
@@ -26,6 +34,38 @@ interface MainContentProps {
 
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const handleAddToCart = (itemId: number, name: string, price: number, quantity: number) => {
+    setCart((prev) => {
+      const existingItem = prev.find((cartItem) => cartItem.id === itemId);
+      if (existingItem) {
+        return prev.map((cartItem) =>
+          cartItem.id === itemId
+            ? { ...cartItem, quantity: cartItem.quantity + quantity }
+            : cartItem
+        );
+      } else {
+        return [...prev, { id: itemId, name, price, quantity }];
+      }
+    });
+  };
+
+  const handleUpdateCartQuantity = (itemId: number, amount: number) => {
+    setCart((prev) => {
+      return prev.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
+      ).filter(item => item.quantity > 0);
+    });
+  };
+
+  const calculateSubtotal = () => {
+    return cart.reduce((subtotal, item) => subtotal + item.price * item.quantity, 0);
+  };
+
+  const calculateTotal = () => {
+    return calculateSubtotal();
+  };
 
   const handleTabChange = (index: number) => {
     setActiveTab(index);
@@ -72,6 +112,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
+                handleAddToCart={handleAddToCart}
               />
             ))}
           </div>
@@ -83,6 +124,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
+                handleAddToCart={handleAddToCart}
               />
             ))}
           </Collapse>
@@ -94,6 +136,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
+                handleAddToCart={handleAddToCart}
               />
             ))}
           </Collapse>
@@ -132,6 +175,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                         name={section.name}
                         items={section.items}
                         isMobile={isMobile}
+                        handleAddToCart={handleAddToCart}
                       />
                     ))}
                   </div>
@@ -143,6 +187,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                         name={section.name}
                         items={section.items}
                         isMobile={isMobile}
+                        handleAddToCart={handleAddToCart}
                       />
                     ))}
                   </Collapse>
@@ -154,6 +199,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                         name={section.name}
                         items={section.items}
                         isMobile={isMobile}
+                        handleAddToCart={handleAddToCart}
                       />
                     ))}
                   </Collapse>
@@ -167,6 +213,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                       name={section.name}
                       items={section.items}
                       isMobile={isMobile}
+                      handleAddToCart={handleAddToCart}
                     />
                   ))}
                 </div>
@@ -177,17 +224,27 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             opacity={1}
             mobile={isMobile}
           />
-          {!isMobile && (
-            <Card
-              title="Carrinho"
-              content={<div>Cart card content</div>}
-              width={isMobile ? '100%' : '320px'}
-              height={isMobile ? 'auto' : '129px'}
-              gap={isMobile ? '0' : '1px'}
-              opacity={1}
-              mobile={isMobile}
-            />
-          )}
+
+          <div className="main-content">
+            {!isMobile && (
+              <Card
+                title="Cart"
+                content={
+                  <Cart
+                    cart={cart}
+                    handleUpdateCartQuantity={handleUpdateCartQuantity}
+                    calculateSubtotal={calculateSubtotal}
+                    calculateTotal={calculateTotal}
+                  />
+                }
+                width={isMobile ? '100%' : '320px'}
+                height={isMobile ? 'auto' : '129px'}
+                gap={isMobile ? '0' : '1px'}
+                opacity={1}
+                mobile={isMobile}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
