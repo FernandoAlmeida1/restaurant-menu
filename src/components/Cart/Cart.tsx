@@ -16,6 +16,8 @@ interface CartProps {
   calculateTotal: () => number;
 }
 
+const EURO_CONVERSION_RATE = 6.17;
+
 const Cart: React.FC<CartProps> = ({
   cart,
   handleUpdateCartQuantity,
@@ -23,6 +25,8 @@ const Cart: React.FC<CartProps> = ({
   calculateTotal,
 }) => {
   const isEmpty = cart.length === 0;
+
+  const subtotalInEuros = calculateSubtotal() / EURO_CONVERSION_RATE;
 
   return (
     <div className="cart">
@@ -47,7 +51,7 @@ const Cart: React.FC<CartProps> = ({
           ))}
           <div className="cart-total-subtotal">
             <p>Subtotal: </p>
-            <p>R${calculateSubtotal().toFixed(2)}</p>
+            <p>£{subtotalInEuros.toFixed(2)}</p>
           </div>
           <div className="cart-total-subtotal">
             <p className="cart-title-calculation">Total:</p>
