@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
-import Collapse from '../Collapse/Collapse'; // Importando o componente Collapse
+import Collapse from '../Collapse/Collapse'; 
 import './MainContent.css';
 
 interface MenuItem {
   id: number;
   name: string;
-  items: Array<{ name: string }>;
-  sections?: Array<{ id: number; name: string; items: Array<{ name: string }> }>;
+  description: string | null;
+  price: number;
+  images: { id: number; image: string }[];
+}
+
+interface SectionItem {
+  id: number;
+  name: string;
+  items: MenuItem[]; 
 }
 
 interface MainContentProps {
   tabValue: number;
-  filteredMenu: MenuItem | null;
+  filteredMenu: { sections?: SectionItem[] } | null;
   isMobile: boolean;
 }
 
@@ -29,6 +36,10 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     { name: 'Drinks', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png' },
     { name: 'Desserts', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe93cb615.png' }
   ];
+
+  const getFilteredSections = (name: string): SectionItem[] => {
+    return filteredMenu?.sections?.filter(section => section.name === name) || [];
+  };
 
   return (
     <div className={`main-content-container ${isMobile ? 'mobile' : ''}`}>
@@ -55,42 +66,36 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
           </div>
           
           <div className="tab-content">
-            {filteredMenu?.sections
-              .filter(section => section.name === sections[activeTab].name)
-              .map(section => (
-                <MenuSection
-                  key={section.id}
-                  name={section.name}
-                  items={section.items}
-                  isMobile={isMobile}
-                />
-              ))}
+            {getFilteredSections(sections[activeTab].name).map(section => (
+              <MenuSection
+                key={section.id}
+                name={section.name}
+                items={section.items}
+                isMobile={isMobile}
+              />
+            ))}
           </div>
 
           <Collapse title="Burgers">
-            {filteredMenu?.sections
-              .filter(section => section.name === 'Burgers')
-              .map(section => (
-                <MenuSection
-                  key={section.id}
-                  name={section.name}
-                  items={section.items}
-                  isMobile={isMobile}
-                />
-              ))}
+            {getFilteredSections('Burgers').map(section => (
+              <MenuSection
+                key={section.id}
+                name={section.name}
+                items={section.items}
+                isMobile={isMobile}
+              />
+            ))}
           </Collapse>
 
           <Collapse title="Drinks">
-            {filteredMenu?.sections
-              .filter(section => section.name === 'Drinks')
-              .map(section => (
-                <MenuSection
-                  key={section.id}
-                  name={section.name}
-                  items={section.items}
-                  isMobile={isMobile}
-                />
-              ))}
+            {getFilteredSections('Drinks').map(section => (
+              <MenuSection
+                key={section.id}
+                name={section.name}
+                items={section.items}
+                isMobile={isMobile}
+              />
+            ))}
           </Collapse>
 
         </div>
@@ -99,6 +104,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
       <div className={`card-container-wrapper ${isMobile ? 'mobile' : ''}`}>
         <div className="card-container">
           <Card
+            title=""
             content={
               !isMobile ? (
                 <div>
@@ -120,50 +126,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                   </div>
                   
                   <div className="tab-content">
-                    {filteredMenu?.sections
-                      .filter(section => section.name === sections[activeTab].name)
-                      .map(section => (
-                        <MenuSection
-                          key={section.id}
-                          name={section.name}
-                          items={section.items}
-                          isMobile={isMobile}
-                        />
-                      ))}
-                  </div>
-
-                  <Collapse title="Burgers">
-                    {filteredMenu?.sections
-                      .filter(section => section.name === 'Burgers')
-                      .map(section => (
-                        <MenuSection
-                          key={section.id}
-                          name={section.name}
-                          items={section.items}
-                          isMobile={isMobile}
-                        />
-                      ))}
-                  </Collapse>
-
-                  <Collapse title="Drinks">
-                    {filteredMenu?.sections
-                      .filter(section => section.name === 'Drinks')
-                      .map(section => (
-                        <MenuSection
-                          key={section.id}
-                          name={section.name}
-                          items={section.items}
-                          isMobile={isMobile}
-                        />
-                      ))}
-                  </Collapse>
-
-                </div>
-              ) : (
-                <div className="tab-content">
-                  {filteredMenu?.sections
-                    .filter(section => section.name === sections[activeTab].name)
-                    .map(section => (
+                    {getFilteredSections(sections[activeTab].name).map(section => (
                       <MenuSection
                         key={section.id}
                         name={section.name}
@@ -171,6 +134,41 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                         isMobile={isMobile}
                       />
                     ))}
+                  </div>
+
+                  <Collapse title="Burgers">
+                    {getFilteredSections('Burgers').map(section => (
+                      <MenuSection
+                        key={section.id}
+                        name={section.name}
+                        items={section.items}
+                        isMobile={isMobile}
+                      />
+                    ))}
+                  </Collapse>
+
+                  <Collapse title="Drinks">
+                    {getFilteredSections('Drinks').map(section => (
+                      <MenuSection
+                        key={section.id}
+                        name={section.name}
+                        items={section.items}
+                        isMobile={isMobile}
+                      />
+                    ))}
+                  </Collapse>
+
+                </div>
+              ) : (
+                <div className="tab-content">
+                  {getFilteredSections(sections[activeTab].name).map(section => (
+                    <MenuSection
+                      key={section.id}
+                      name={section.name}
+                      items={section.items}
+                      isMobile={isMobile}
+                    />
+                  ))}
                 </div>
               )
             }

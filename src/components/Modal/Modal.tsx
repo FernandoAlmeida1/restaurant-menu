@@ -34,11 +34,7 @@ const Modal: React.FC<ModalProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   if (!isOpen || !item) return null;
-
-  const handleQuantityChange = (change: number) => {
-    setQuantity((prevQuantity) => Math.max(prevQuantity + change, 1));
-  };
-
+  
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(Number(event.target.value));
   };

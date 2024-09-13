@@ -3,15 +3,17 @@ import Modal from "../Modal/Modal";
 import QuantityControl from "../QuantityControl/QuantityControl";
 import './MenuSection.css';
 
+interface MenuItem {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number;
+  images: { id: number; image: string }[];
+}
+
 interface MenuSectionProps {
   name: string;
-  items: {
-    id: number;
-    name: string;
-    description: string | null;
-    price: number;
-    images: { id: number; image: string }[];
-  }[];
+  items: MenuItem[];
   isMobile: boolean;
 }
 
@@ -22,7 +24,7 @@ interface CartItem {
   quantity: number;
 }
 
-const MenuSection: React.FC<MenuSectionProps> = ({ name, items, isMobile }) => {
+const MenuSection: React.FC<MenuSectionProps> = ({ name, items }) => {
   const [selectedItem, setSelectedItem] = useState<null | {
     id: number;
     name: string;

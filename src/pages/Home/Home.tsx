@@ -3,7 +3,33 @@ import { fetchRestaurantDetails, fetchRestaurantMenu } from '../../services/api'
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MainContent from '../../components/MainContent/MainContent';
-import './Home.css'; 
+import './Home.css';
+
+export interface Restaurant {
+  webSettings: {
+    bannerImage: string;
+    navBackgroundColour: string;
+    primaryColour: string;
+  };
+}
+
+export interface MenuItem {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number;
+  images: { id: number; image: string }[];
+}
+
+export interface SectionItem {
+  id: number;
+  name: string;
+  items: MenuItem[];
+}
+
+export interface Menu {
+  sections: SectionItem[];
+}
 
 const Home: React.FC = () => {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -56,9 +82,9 @@ const Home: React.FC = () => {
     if (menu) {
       const filtered = {
         ...menu,
-        sections: menu.sections.map(section => ({
+        sections: menu.sections.map((section) => ({
           ...section,
-          items: section.items.filter(item =>
+          items: section.items.filter((item) =>
             item.name.toLowerCase().includes(query.toLowerCase())
           )
         }))
