@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import QuantityControl from "../QuantityControl/QuantityControl";
 import "./Modal.css";
 
@@ -30,6 +31,7 @@ const Modal: React.FC<ModalProps> = ({
   item,
   onAddToOrder,
 }) => {
+  const { t } = useTranslation(); 
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -73,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({
         <div style={{ padding: "12px" }}>
           <p className="modal-item-name">{item.name}</p>
           <p className="modal-item-description">
-            {item.description || "Sem descrição"}
+            {item.description || t('no_description')}
           </p>
         </div>
         <div>
@@ -82,7 +84,7 @@ const Modal: React.FC<ModalProps> = ({
               <div key={modifier.name}>
                 <div style={{ padding: "8px", background: "#F8F9FA" }}>
                   <h2 className="modifier-name">{modifier.name}</h2>
-                  <p className="select-option">Select 1 option</p>
+                  <p className="select-option">{t('select_option')}</p>
                 </div>
 
                 {modifier.items.map((option) => (
@@ -115,12 +117,12 @@ const Modal: React.FC<ModalProps> = ({
             alignItems: "center",
           }}
         >
-        <QuantityControl quantity={quantity} onChange={(amount) => setQuantity(quantity + amount)} />
+          <QuantityControl quantity={quantity} onChange={(amount) => setQuantity(quantity + amount)} />
           <button
             className="modal-add-to-order-button"
             onClick={handleAddToOrder}
           >
-            Add to Order • R$ {totalPrice.toFixed(2)}
+            {t('add_to_order')} • R$ {totalPrice.toFixed(2)}
           </button>
         </div>
       </div>

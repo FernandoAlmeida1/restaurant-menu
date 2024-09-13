@@ -11,5 +11,7 @@
   "desserts": "Sobremesas",
   "checkout_initiated": "Checkout iniciado",
   "no_description": "Sem descrição",
-  "no_items_available": "Nenhum item disponível"
+  "no_items_available": "Nenhum item disponível",
+  "select_option": "Selecione 1 opção",
+  "add_to_order": "Adicionar ao Pedido"
 }
