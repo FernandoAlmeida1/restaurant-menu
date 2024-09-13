@@ -5,5 +5,10 @@
   "contact": "Contato",
   "search_placeholder": "Buscar itens do menu",
   "menu": "Menu",
-  "banner_alt": "Banner"
+  "banner_alt": "Banner",
+  "burgers": "Hambúrgueres",
+  "drinks": "Bebidas",
+  "desserts": "Sobremesas",
+  "checkout_initiated": "Checkout iniciado"
+  
 }

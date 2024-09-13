@@ -5,5 +5,9 @@
   "contact": "Contact",
   "search_placeholder": "Search menu items",
   "menu": "Menu",
-  "banner_alt": "Banner"
+  "banner_alt": "Banner",
+  "burgers": "Burgers",
+  "drinks": "Drinks",
+  "desserts": "Desserts",
+  "checkout_initiated": "Checkout initiated"
 }

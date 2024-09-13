@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; // Importa o hook useTranslation
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
 import Cart from "../Cart/Cart";
@@ -34,6 +35,7 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
+  const { t } = useTranslation(); // Obtém a função de tradução
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false);
@@ -55,7 +57,6 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
       return updatedCart;
     });
   };
-  
 
   const handleUpdateCartQuantity = (itemId: number, amount: number) => {
     setCart((prev) => {
@@ -78,9 +79,9 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
   };
 
   const sections = [
-    { name: 'Burgers', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe4c64a6f.png' },
-    { name: 'Drinks', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png' },
-    { name: 'Desserts', image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe93cb615.png' }
+    { name: t('burgers'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe4c64a6f.png' },
+    { name: t('drinks'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png' },
+    { name: t('desserts'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe93cb615.png' }
   ];
 
   const getFilteredSections = (name: string): SectionItem[] => {
@@ -88,13 +89,13 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
   };
 
   const handleCheckout = () => {
-    console.log("Checkout process initiated");
+    console.log(t("checkout_initiated")); // Usa a função de tradução
   };
-  
+
   return (
     <div className={`main-content-container ${isMobile ? 'mobile' : ''}`}>
-      {tabValue === 1 && <section><h2>Login</h2></section>}
-      {tabValue === 2 && <section><h2>Contact</h2></section>}
+      {tabValue === 1 && <section><h2>{t('login')}</h2></section>}
+      {tabValue === 2 && <section><h2>{t('contact')}</h2></section>}
 
       {isMobile && (
         <>
@@ -127,8 +128,8 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             ))}
           </div>
 
-          <Collapse title="Burgers">
-            {getFilteredSections('Burgers').map(section => (
+          <Collapse title={t('burgers')}>
+            {getFilteredSections(t('burgers')).map(section => (
               <MenuSection
                 key={section.id}
                 name={section.name}
@@ -139,8 +140,8 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             ))}
           </Collapse>
 
-          <Collapse title="Drinks">
-            {getFilteredSections('Drinks').map(section => (
+          <Collapse title={t('drinks')}>
+            {getFilteredSections(t('drinks')).map(section => (
               <MenuSection
                 key={section.id}
                 name={section.name}
@@ -199,8 +200,8 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     ))}
                   </div>
 
-                  <Collapse title="Burgers">
-                    {getFilteredSections('Burgers').map(section => (
+                  <Collapse title={t('burgers')}>
+                    {getFilteredSections(t('burgers')).map(section => (
                       <MenuSection
                         key={section.id}
                         items={section.items}
@@ -210,8 +211,8 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     ))}
                   </Collapse>
 
-                  <Collapse title="Drinks">
-                    {getFilteredSections('Drinks').map(section => (
+                  <Collapse title={t('drinks')}>
+                    {getFilteredSections(t('drinks')).map(section => (
                       <MenuSection
                         key={section.id}
                         items={section.items}
@@ -245,7 +246,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
           <div className="main-content">
             {!isMobile && (
               <Card
-                title="Carrinho"
+                title={t('cart')}
                 content={
                   <Cart
                     cart={cart}
