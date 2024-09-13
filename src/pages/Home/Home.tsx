@@ -50,7 +50,7 @@ const Home: React.FC = () => {
         const menuData = await fetchRestaurantMenu();
         setMenu(menuData);
         setFilteredMenu(menuData);
-      } catch (err) {
+      } catch {
         setError("Erro ao carregar os dados");
       } finally {
         setLoading(false);
