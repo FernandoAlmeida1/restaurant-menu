@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
 import Cart from "../Cart/Cart";
+import CartModal from '../CartModal/CartModal';
 import Collapse from '../Collapse/Collapse'; 
 import './MainContent.css';
 
@@ -35,21 +36,26 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false); // Estado para o modal
 
   const handleAddToCart = (itemId: number, name: string, price: number, quantity: number) => {
     setCart((prev) => {
       const existingItem = prev.find((cartItem) => cartItem.id === itemId);
+      let updatedCart;
       if (existingItem) {
-        return prev.map((cartItem) =>
+        updatedCart = prev.map((cartItem) =>
           cartItem.id === itemId
             ? { ...cartItem, quantity: cartItem.quantity + quantity }
             : cartItem
         );
       } else {
-        return [...prev, { id: itemId, name, price, quantity }];
+        updatedCart = [...prev, { id: itemId, name, price, quantity }];
       }
+      setIsCartModalOpen(true);
+      return updatedCart;
     });
   };
+  
 
   const handleUpdateCartQuantity = (itemId: number, amount: number) => {
     setCart((prev) => {
@@ -87,7 +93,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
       {tabValue === 2 && <section><h2>Contact</h2></section>}
 
       {isMobile && (
-        <div>
+        <>
           <div className="tabs mobile-tabs">
             {sections.map((section, index) => (
               <div
@@ -141,7 +147,15 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             ))}
           </Collapse>
 
-        </div>
+          <CartModal
+            isOpen={isCartModalOpen}
+            onClose={() => setIsCartModalOpen(false)}
+            cart={cart}
+            handleUpdateCartQuantity={handleUpdateCartQuantity}
+            calculateSubtotal={calculateSubtotal}
+            calculateTotal={calculateTotal}
+          />
+        </>
       )}
 
       <div className={`card-container-wrapper ${isMobile ? 'mobile' : ''}`}>
