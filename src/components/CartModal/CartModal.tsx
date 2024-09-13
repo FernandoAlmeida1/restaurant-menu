@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next'; 
 import QuantityControl from "../QuantityControl/QuantityControl";
 import "./CartModal.css";
 
@@ -28,6 +29,7 @@ const CartModal: React.FC<CartProps> = ({
   onClose,
   onCheckout
 }) => {
+  const { t } = useTranslation(); 
   const isEmpty = cart.length === 0;
 
   if (!isOpen) return null;
@@ -40,9 +42,9 @@ const CartModal: React.FC<CartProps> = ({
   return (
     <div className="cart-modal-overlay" onClick={onClose}>
       <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
-        <span className="cart-modal-title">Carrinho</span>
+        <span className="cart-modal-title">{t('cart_title')}</span>
         {isEmpty ? (
-          <p className="cart-empty-message">Seu carrinho está vazio</p>
+          <p className="cart-empty-message">{t('cart_empty_message')}</p>
         ) : (
           <>
             {cart.map((item) => (
@@ -60,14 +62,16 @@ const CartModal: React.FC<CartProps> = ({
               </div>
             ))}
             <div className="cart-total-subtotal">
-              <p>Subtotal:</p>
+              <p>{t('subtotal')}:</p>
               <p>R${calculateSubtotal().toFixed(2)}</p>
             </div>
             <div className="cart-total-subtotal">
-              <p className="cart-title-calculation">Total:</p>
+              <p className="cart-title-calculation">{t('total')}:</p>
               <p className="cart-value-calculation">R${calculateTotal().toFixed(2)}</p>
             </div>
-            <button className="cart-checkout-button" onClick={handleCheckout}>Checkout Now</button>
+            <button className="cart-checkout-button" onClick={handleCheckout}>
+              {t('checkout_now')}
+            </button>
             <button className="cart-close-button" onClick={onClose}>&times;</button>
           </>
         )}

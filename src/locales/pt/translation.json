@@ -13,5 +13,10 @@
   "no_description": "Sem descrição",
   "no_items_available": "Nenhum item disponível",
   "select_option": "Selecione 1 opção",
-  "add_to_order": "Adicionar ao Pedido"
+  "add_to_order": "Adicionar ao Pedido",
+  "cart_title": "Carrinho",
+  "cart_empty_message": "Seu carrinho está vazio",
+  "subtotal": "Subtotal",
+  "total": "Total",
+  "checkout_now": "Checkout Agora"
 }
