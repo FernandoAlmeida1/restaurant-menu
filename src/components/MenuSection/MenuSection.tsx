@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next'; // Importa o hook useTranslation
 import Modal from "../Modal/Modal";
 import './MenuSection.css';
 
@@ -18,6 +19,7 @@ interface MenuSectionProps {
 }
 
 const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart }) => {
+  const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState<null | MenuItem>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedItems, setAddedItems] = useState<number[]>([]);
@@ -43,24 +45,24 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
 
   return (
     <div className="menu-section">
-      <h3>{name}</h3>
+      <h3>{name || t('menu')}</h3>
       {items && items.length > 0 ? (
         items.map((item) => (
           <div key={item.id} className="menu-item" onClick={() => handleItemClick(item)}>
             <div className="menu-item-details">
-            <h4 className="menu-item-name">
-            {addedItems.includes(item.id) && (
-              <span className="item-quantity-circle">
-                {addedItems.filter(id => id === item.id).length}
-              </span>
-            )}
-              {item.name}
-            </h4>
+              <h4 className="menu-item-name">
+                {addedItems.includes(item.id) && (
+                  <span className="item-quantity-circle">
+                    {addedItems.filter(id => id === item.id).length}
+                  </span>
+                )}
+                {item.name}
+              </h4>
               <p className="menu-item-description">
-              {item.description && item.description.length > 20
-                ? `${item.description.substring(0, 52)}...`
-                : item.description || "Sem descrição"}
-            </p>
+                {item.description && item.description.length > 20
+                  ? `${item.description.substring(0, 52)}...`
+                  : item.description || t('no_description')}
+              </p>
               <p className="menu-item-price">R${item.price.toFixed(2)}</p>
             </div>
             {item.images && item.images.length > 0 && (
@@ -69,13 +71,12 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
           </div>
         ))
       ) : (
-        <p>No items available</p>
+        <p>{t('no_items_available')}</p>
       )}
   
       <Modal isOpen={isModalOpen} onClose={closeModal} item={selectedItem} onAddToOrder={handleAddToOrder} />
     </div>
   );
-  
 };
 
 export default MenuSection;

@@ -9,6 +9,7 @@
   "burgers": "Hambúrgueres",
   "drinks": "Bebidas",
   "desserts": "Sobremesas",
-  "checkout_initiated": "Checkout iniciado"
-  
+  "checkout_initiated": "Checkout iniciado",
+  "no_description": "Sem descrição",
+  "no_items_available": "Nenhum item disponível"
 }

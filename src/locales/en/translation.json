@@ -9,5 +9,7 @@
   "burgers": "Burgers",
   "drinks": "Drinks",
   "desserts": "Desserts",
-  "checkout_initiated": "Checkout initiated"
+  "checkout_initiated": "Checkout initiated",
+  "no_description": "No description",
+  "no_items_available": "No items available"
 }
