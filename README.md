@@ -1,50 +1,91 @@
-# React + TypeScript + Vite
+# Restaurant Menu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto de menu de restaurante construído com React, TypeScript e Vite. O projeto inclui funcionalidades de Internacionalização de textos, Internacionalização por dinheiro, roteamento e estilização com Styled Components.
 
-Currently, two official plugins are available:
+## Índice
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Visão Geral](#visão-geral)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Scripts](#scripts)
+- [Executando o Projeto](#executando-o-projeto)
+- [Deploy](#deploy)
+- [Links Importantes](#links-importantes)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-## Expanding the ESLint configuration
+## Visão Geral
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Este projeto é um menu de restaurante que permite visualizar e interagir com itens de menu. É construído usando [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), e [Vite](https://vitejs.dev/) para um desenvolvimento rápido e eficiente.
 
-- Configure the top-level `parserOptions` property like this:
+## Pré-requisitos
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- [Node.js](https://nodejs.org/) (recomendado versão 16 ou superior)
+- [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Instalação
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/seu-usuario/restaurant-menu.git
+
+2. Navegue para o diretório do projeto:
+  cd restaurant-menu
+
+3. Instale as dependências:
+  npm install
+
+## Scripts
+
+Aqui estão os scripts disponíveis para gerenciar o projeto:
+
+  dev: Inicia o servidor de desenvolvimento. Acesse http://localhost:3000 no seu navegador.
+    npm run dev
+
+  build: Compila o projeto para produção. A build será gerada no diretório dist.
+    npm run build
+
+  lint: Executa a verificação de linting no código.
+    npm run lint
+
+  preview: Visualiza a build de produção localmente.
+    npm run preview
+
+  test: Executa os testes usando Jest.
+    npm run test  
+
+  predeploy: Executa a build do projeto antes do deploy.
+    npm run predeploy
+
+  deploy: Publica a build no GitHub Pages.
+    npm run deploy
+
+## Executando o Projeto
+
+  Para iniciar o projeto localmente, use o comando:
+    npm run dev
+
+  Acesse o projeto no navegador através de:
+    http://localhost:3000
+
+## Deploy
+
+  Para publicar o projeto no GitHub Pages, siga estes passos:
+    1. Certifique-se de que o diretório dist é gerado corretamente com npm run build.
+    2. Adicione a configuração base no arquivo vite.config.ts:
+      import { defineConfig } from 'vite';
+      export default defineConfig({
+        base: '/restaurant-menu/',
+      });
+    3. Execute o comando de deploy:
+      npm run deploy
+    
+  O projeto será publicado em:
+    https://fernandoalmeida1.github.io/restaurant-menu/
+
+    Links Importantes
+      GitHub Repository
+      GitHub Pages

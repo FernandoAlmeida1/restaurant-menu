@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next'; // Importa o hook useTranslation
+import { useTranslation } from 'react-i18next'; 
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
 import Cart from "../Cart/Cart";
@@ -35,7 +35,7 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
-  const { t } = useTranslation(); // Obtém a função de tradução
+  const { t } = useTranslation(); 
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false);
