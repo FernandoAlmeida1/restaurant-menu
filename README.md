@@ -8,7 +8,7 @@ This is a restaurant menu project built with React, TypeScript, and Vite. The pr
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Scripts](#scripts)
-- [Running the Project](#runningtheproject)
+- [Running the Project](#Running the Project)
 - [Deploy](#deploy)
 
 
