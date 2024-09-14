@@ -63,29 +63,29 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
 
   preview: Visualiza a build de produção localmente.
     
-    ```bash
+    
     npm run preview
 
   test: Executa os testes usando Jest.
     
-    ```bash
+    
     npm run test  
 
   predeploy: Executa a build do projeto antes do deploy.
     
-    ```bash
+    
     npm run predeploy
 
   deploy: Publica a build no GitHub Pages.
     
-    ```bash
+    
     npm run deploy
 
 ## Executando o Projeto
 
   Para iniciar o projeto localmente, use o comando:
     
-    ```bash
+    
     npm run dev
 
   Acesse o projeto no navegador através de:
