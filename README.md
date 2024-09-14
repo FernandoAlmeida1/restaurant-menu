@@ -47,36 +47,44 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 Aqui estão os scripts disponíveis para gerenciar o projeto:
 
   dev: Inicia o servidor de desenvolvimento. Acesse http://localhost:5174/restaurant-menu/ no seu navegador.
+    
     ```bash
     npm run dev
 
   build: Compila o projeto para produção. A build será gerada no diretório dist.
+    
     ```bash
     npm run build
 
   lint: Executa a verificação de linting no código.
+    
     ```bash
     npm run lint
 
   preview: Visualiza a build de produção localmente.
+    
     ```bash
     npm run preview
 
   test: Executa os testes usando Jest.
+    
     ```bash
     npm run test  
 
   predeploy: Executa a build do projeto antes do deploy.
+    
     ```bash
     npm run predeploy
 
   deploy: Publica a build no GitHub Pages.
+    
     ```bash
     npm run deploy
 
 ## Executando o Projeto
 
   Para iniciar o projeto localmente, use o comando:
+    
     ```bash
     npm run dev
 
