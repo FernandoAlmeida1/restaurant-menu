@@ -1,4 +1,7 @@
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = true; 
+console.log("Is production:", isProduction); 
+
 
 export const fetchRestaurantDetails = async () => {
   if (isProduction) {
