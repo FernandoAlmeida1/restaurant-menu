@@ -10,9 +10,7 @@ Este é um projeto de menu de restaurante construído com React, TypeScript e Vi
 - [Scripts](#scripts)
 - [Executando o Projeto](#executando-o-projeto)
 - [Deploy](#deploy)
-- [Links Importantes](#links-importantes)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
+
 
 ## Visão Geral
 
@@ -30,7 +28,7 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/restaurant-menu.git
+   git clone https://github.com/FernandoAlmeida1/restaurant-menu.git  
 
 2. Navegue para o diretório do projeto:
 
@@ -89,23 +87,27 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
     npm run dev
 
   Acesse o projeto no navegador através de:
-    http://localhost:3000
+    http://localhost:5173/restaurant-menu/
 
 ## Deploy
 
   Para publicar o projeto no GitHub Pages, siga estes passos:
-    1. Certifique-se de que o diretório dist é gerado corretamente com npm run build.
-    2. Adicione a configuração base no arquivo vite.config.ts:
+
+1. Certifique-se de que o diretório dist é gerado corretamente com npm run build.
+
+2. Adicione a configuração base no arquivo vite.config.ts:
+
+
       import { defineConfig } from 'vite';
       export default defineConfig({
         base: '/restaurant-menu/',
       });
-    3. Execute o comando de deploy:
+
+3. Execute o comando de deploy:
+      
+      
       npm run deploy
     
   O projeto será publicado em:
     https://fernandoalmeida1.github.io/restaurant-menu/
 
-    Links Importantes
-      GitHub Repository
-      GitHub Pages
