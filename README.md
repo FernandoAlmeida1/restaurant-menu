@@ -48,17 +48,17 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
 
   dev: Inicia o servidor de desenvolvimento. Acesse http://localhost:5174/restaurant-menu/ no seu navegador.
     
-    ```bash
+    
     npm run dev
 
   build: Compila o projeto para produção. A build será gerada no diretório dist.
     
-    ```bash
+    
     npm run build
 
   lint: Executa a verificação de linting no código.
     
-    ```bash
+    
     npm run lint
 
   preview: Visualiza a build de produção localmente.
