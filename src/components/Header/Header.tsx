@@ -73,6 +73,7 @@ const Header: React.FC<HeaderProps> = ({
         className="banner-image"
         style={{
           width: "100%",
+          marginTop: isMobile ? "" : "-30px", 
           height: isMobile ? "150px" : "300px",
           objectFit: "cover",
         }}
