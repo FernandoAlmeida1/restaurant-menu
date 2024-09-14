@@ -43,24 +43,24 @@ const Home: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const restaurantData = await fetchRestaurantDetails();
-  //       setRestaurant(restaurantData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const restaurantData = await fetchRestaurantDetails();
+        setRestaurant(restaurantData);
 
-  //       const menuData = await fetchRestaurantMenu();
-  //       setMenu(menuData);
-  //       setFilteredMenu(menuData);
-  //     } catch {
-  //       setError(t("error")); 
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        const menuData = await fetchRestaurantMenu();
+        setMenu(menuData);
+        setFilteredMenu(menuData);
+      } catch {
+        setError(t("error")); 
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchData();
-  // }, [t]);
+    fetchData();
+  }, [t]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
     }
   };
 
-  // if (loading) return <div>{t("loading")}</div>;
+  if (loading) return <div>{t("loading")}</div>;
   if (error) return <div>{error}</div>;
 
   return (
