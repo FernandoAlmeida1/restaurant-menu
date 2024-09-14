@@ -97,7 +97,7 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
 
 2. Adicione a configuração base no arquivo vite.config.ts:
 
-
+      ```bash
       import { defineConfig } from 'vite';
       export default defineConfig({
         base: '/restaurant-menu/',
@@ -105,7 +105,7 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
 
 3. Execute o comando de deploy:
       
-      
+      ```bash
       npm run deploy
     
   O projeto será publicado em:
