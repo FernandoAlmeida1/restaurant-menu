@@ -33,12 +33,14 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
    git clone https://github.com/seu-usuario/restaurant-menu.git
 
 2. Navegue para o diretório do projeto:
-  ```bash
-  cd restaurant-menu
+
+    ```bash
+    cd restaurant-menu
 
 3. Instale as dependências:
-  ```bash
-  npm install
+    
+    ```bash
+    npm install
 
 ## Scripts
 
