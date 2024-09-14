@@ -1,17 +1,37 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const fetchRestaurantDetails = async () => {
-  const response = await fetch("/api/challenge/venue/9");
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Failed to fetch restaurant details: ${response.status} ${errorText}`);
+  if (isProduction) {
+    const response = await fetch("/data/restaurantDetails.json");
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch restaurant details (local): ${response.status} ${errorText}`);
+    }
+    return response.json();
+  } else {
+    const response = await fetch("/api/challenge/venue/9");
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch restaurant details (API): ${response.status} ${errorText}`);
+    }
+    return response.json();
   }
-  return response.json();
 };
 
 export const fetchRestaurantMenu = async () => {
-  const response = await fetch("/api/challenge/menu");
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Failed to fetch menu details: ${response.status} ${errorText}`);
+  if (isProduction) {
+    const response = await fetch("/data/restaurantMenu.json");
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch menu details (local): ${response.status} ${errorText}`);
+    }
+    return response.json();
+  } else {
+    const response = await fetch("/api/challenge/menu");
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch menu details (API): ${response.status} ${errorText}`);
+    }
+    return response.json();
   }
-  return response.json();
 };
