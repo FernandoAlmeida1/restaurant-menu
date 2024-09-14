@@ -1,101 +1,101 @@
 # Restaurant Menu
 
-Este é um projeto de menu de restaurante construído com React, TypeScript e Vite. O projeto inclui funcionalidades de Internacionalização de textos, Internacionalização por dinheiro, roteamento e estilização com Styled Components.
+This is a restaurant menu project built with React, TypeScript, and Vite. The project includes text internationalization, currency internationalization, routing, and styling with Styled Components.
 
 ## Índice
 
-- [Visão Geral](#visão-geral)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 - [Scripts](#scripts)
-- [Executando o Projeto](#executando-o-projeto)
+- [Running the Project](#runningtheproject)
 - [Deploy](#deploy)
 
 
-## Visão Geral
+## Overview
 
-Este projeto é um menu de restaurante que permite visualizar e interagir com itens de menu. É construído usando [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), e [Vite](https://vitejs.dev/) para um desenvolvimento rápido e eficiente.
+This project is a restaurant menu that allows you to view and interact with menu items. It is built [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Vite](https://vitejs.dev/) for fast and efficient development.
 
-## Pré-requisitos
+## Prerequisites
 
-Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
+Before you start, make sure you have the following tools installed:
 
-- [Node.js](https://nodejs.org/) (recomendado versão 16 ou superior)
-- [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js)
+- [Node.js](https://nodejs.org/) (recommended version 16 or higher)
+- [npm](https://www.npmjs.com/) (Node.js package manager)
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/FernandoAlmeida1/restaurant-menu.git  
 
-2. Navegue para o diretório do projeto:
+2. Navigate to the project directory:
 
     ```bash
     cd restaurant-menu
 
-3. Instale as dependências:
+3. Install the dependencies:
     
     ```bash
     npm install
 
 ## Scripts
 
-Aqui estão os scripts disponíveis para gerenciar o projeto:
+Here are the available scripts for managing the project:
 
-  dev: Inicia o servidor de desenvolvimento. Acesse http://localhost:5174/restaurant-menu/ no seu navegador.
+  dev: Starts the development server. Access http://localhost:5174/restaurant-menu/ in your
     
     
     npm run dev
 
-  build: Compila o projeto para produção. A build será gerada no diretório dist.
+  build: Compiles the project for production. The build will be generated in the dist directory.
     
     
     npm run build
 
-  lint: Executa a verificação de linting no código.
+  lint: Runs linting checks on the code.
     
     
     npm run lint
 
-  preview: Visualiza a build de produção localmente.
+  preview: Views the production build locally.
     
     
     npm run preview
 
-  test: Executa os testes usando Jest.
+  test: Runs tests using Jest.
     
     
     npm run test  
 
-  predeploy: Executa a build do projeto antes do deploy.
+  predeploy: Runs the project build before deploying.
     
     
     npm run predeploy
 
-  deploy: Publica a build no GitHub Pages.
+  deploy: Publishes the build to GitHub Pages.
     
     
     npm run deploy
 
-## Executando o Projeto
+## Running the Project
 
-  Para iniciar o projeto localmente, use o comando:
+  To start the project locally, use the command:
     
     
     npm run dev
 
-  Acesse o projeto no navegador através de:
+  Access the project in your browser at:
     http://localhost:5173/restaurant-menu/
 
 ## Deploy
 
-  Para publicar o projeto no GitHub Pages, siga estes passos:
+  To publish the project on GitHub Pages, follow these steps:
 
-1. Certifique-se de que o diretório dist é gerado corretamente com npm run build.
+1. Make sure the dist directory is correctly generated with npm run build.
 
-2. Adicione a configuração base no arquivo vite.config.ts:
+2. Add the base configuration in the vite.config.ts file:
 
       ```bash
       import { defineConfig } from 'vite';
@@ -103,11 +103,11 @@ Aqui estão os scripts disponíveis para gerenciar o projeto:
         base: '/restaurant-menu/',
       });
 
-3. Execute o comando de deploy:
+3. Run the deploy command:
       
       ```bash
       npm run deploy
     
-  O projeto será publicado em:
+  The project will be published at
     https://fernandoalmeida1.github.io/restaurant-menu/
 
