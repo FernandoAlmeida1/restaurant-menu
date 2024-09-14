@@ -4,6 +4,7 @@ import { fetchRestaurantDetails, fetchRestaurantMenu } from '../../services/api'
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MainContent from '../../components/MainContent/MainContent';
+import Loading from '../../components/Loading/Loading';  
 import './Home.css';
 
 export interface Restaurant {
@@ -19,7 +20,7 @@ export interface MenuItem {
   name: string;
   description: string | null;
   price: number;
-  images: { id: number; image: string }[];
+  images: { id: number; image: string }[]; 
 }
 
 export interface SectionItem {
@@ -95,7 +96,7 @@ const Home: React.FC = () => {
     }
   };
 
-  if (loading) return <div>{t("loading")}</div>;
+  if (loading) return <Loading />;  
   if (error) return <div>{error}</div>;
 
   return (
