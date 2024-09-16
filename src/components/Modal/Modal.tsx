@@ -67,11 +67,17 @@ const Modal: React.FC<ModalProps> = ({
         <button className="modal-close-button" onClick={onClose}>
           &times;
         </button>
+        {item.images && item.images.length > 0 ? (
         <img
           src={item.images[0].image}
           alt={item.name}
           className="modal-item-image"
         />
+      ) : (
+        <div className="no-image-placeholder">
+          {t('no_image_available')} 
+        </div>
+      )}
         <div style={{ padding: "12px" }}>
           <p className="modal-item-name">{item.name}</p>
           <p className="modal-item-description">
