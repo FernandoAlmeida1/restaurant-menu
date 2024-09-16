@@ -14,10 +14,13 @@
   "no_items_available": "No items available",
   "select_option": "Select 1 option",
   "add_to_order": "Add to Order",
+  "basket_title": "Basket",
   "cart_title": "Cart",
   "cart_empty_message": "Your cart is empty",
   "subtotal": "Subtotal",
   "total": "Total",
   "checkout_now": "Checkout Now",
-  "your_basket": "Your Basket"
+  "your_basket": "Your Basket",
+  "view_allergy_information": "View allergy information"
+  
 }

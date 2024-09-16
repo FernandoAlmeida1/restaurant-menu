@@ -107,3 +107,8 @@
   margin-top: auto; 
   margin-bottom: 20px; 
 }
+
+.content-title-basket {
+  display: flex;
+  justify-content: center;
+}

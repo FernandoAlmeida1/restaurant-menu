@@ -69,6 +69,20 @@
   .content-button-your-basket {
     width: 100%;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .allergy-info-link {
+    color: #4F372F;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 10px; 
+    display: block;
+  }
+  
+  .basket-button {
+    margin-top: 5px; 
   }
   

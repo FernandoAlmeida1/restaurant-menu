@@ -14,10 +14,12 @@
   "no_items_available": "Nenhum item disponível",
   "select_option": "Selecione 1 opção",
   "add_to_order": "Adicionar ao Pedido",
+  "basket_title": "Carrinho",
   "cart_title": "Carrinho",
   "cart_empty_message": "Seu carrinho está vazio",
   "subtotal": "Subtotal",
   "total": "Total",
   "checkout_now": "Checkout Agora",
-  "your_basket": "Seu Carrinho"
+  "your_basket": "Seu Carrinho",
+  "view_allergy_information": "Visualizar informações sobre alergias"
 }

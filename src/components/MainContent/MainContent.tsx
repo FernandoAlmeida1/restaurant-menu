@@ -223,16 +223,27 @@ const MainContent: React.FC<MainContentProps> = ({
             onCheckout={handleCheckout}
           />
 
-          {isBasketButtonVisible && (
+          {isMobile && (
             <div className="content-button-your-basket">
-              <button
-                className="basket-button"
-                onClick={handleBasketButtonClick}
+              <a
+                href="#"
+                className="allergy-info-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("View allergy information clicked");
+                }}
               >
-                {t("your_basket")} • {cart.length} {t("item")}
-              </button>
+                {t("view_allergy_information")}
+              </a>
+
+              {isBasketButtonVisible && (
+                <button className="basket-button" onClick={handleBasketButtonClick}>
+                  {t("your_basket")} • {cart.length} {t("item")}
+                </button>
+              )}
             </div>
           )}
+
         </>
       )}
 

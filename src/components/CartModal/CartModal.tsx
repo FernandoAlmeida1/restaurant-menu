@@ -58,7 +58,9 @@ const CartModal: React.FC<CartProps> = ({
   return (
     <div className="cart-modal-overlay" onClick={onClose}>
       <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
-        <span className="cart-modal-title">{t('cart_title')}</span>
+        <div className="content-title-basket">
+        <span className="cart-modal-title">{t('basket_title')}</span>
+        </div>
         {isEmpty ? (
           <p className="cart-empty-message">{t('cart_empty_message')}</p>
         ) : (
