@@ -19,7 +19,7 @@ interface MenuSectionProps {
   cartItems: { [key: number]: number };
 }
 
-const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart, isMobile, cartItems }) => {
+const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart, cartItems }) => {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState<null | MenuItem>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
