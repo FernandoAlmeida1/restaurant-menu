@@ -20,6 +20,8 @@ interface CartProps {
   onCheckout: () => void; 
 }
 
+const EURO_CONVERSION_RATE = 6.17;
+
 const CartModal: React.FC<CartProps> = ({
   cart,
   handleUpdateCartQuantity,
@@ -32,7 +34,21 @@ const CartModal: React.FC<CartProps> = ({
   const { t } = useTranslation(); 
   const isEmpty = cart.length === 0;
 
+  const subtotal = calculateSubtotal();
+  const subtotalInEuros = subtotal / EURO_CONVERSION_RATE;
+
   if (!isOpen) return null;
+
+  const handleUpdateQuantity = (itemId: number, amount: number) => {
+    handleUpdateCartQuantity(itemId, amount);
+
+    const updatedCart = cart.filter(item => item.id !== itemId || item.quantity + amount > 0);
+    const isCartNowEmpty = updatedCart.every(item => item.quantity === 0);
+
+    if (isCartNowEmpty) {
+      onClose(); 
+    }
+  };
 
   const handleCheckout = () => {
     onCheckout(); 
@@ -53,7 +69,7 @@ const CartModal: React.FC<CartProps> = ({
                   <span className="cart-item-name">{item.name}</span>
                   <QuantityControl
                     quantity={item.quantity}
-                    onChange={(amount) => handleUpdateCartQuantity(item.id, amount)}
+                    onChange={(amount) => handleUpdateQuantity(item.id, amount)}
                   />
                 </div>
                 <span className="cart-item-price">
@@ -62,8 +78,10 @@ const CartModal: React.FC<CartProps> = ({
               </div>
             ))}
             <div className="cart-total-subtotal">
-              <p>{t('subtotal')}:</p>
-              <p>R${calculateSubtotal().toFixed(2)}</p>
+            </div>
+            <div className="cart-total-subtotal">
+              <p>Subtotal:</p>
+              <p>€{subtotalInEuros.toFixed(2)}</p> 
             </div>
             <div className="cart-total-subtotal">
               <p className="cart-title-calculation">{t('total')}:</p>

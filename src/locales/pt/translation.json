@@ -18,5 +18,6 @@
   "cart_empty_message": "Seu carrinho está vazio",
   "subtotal": "Subtotal",
   "total": "Total",
-  "checkout_now": "Checkout Agora"
+  "checkout_now": "Checkout Agora",
+  "your_basket": "Seu Carrinho"
 }

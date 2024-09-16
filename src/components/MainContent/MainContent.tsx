@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next'; 
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import MenuSection from '../MenuSection/MenuSection';
 import Card from '../Card/Card';
 import Cart from "../Cart/Cart";
 import CartModal from '../CartModal/CartModal';
-import Collapse from '../Collapse/Collapse'; 
+import Collapse from '../Collapse/Collapse';
 import './MainContent.css';
 
 interface CartItem {
@@ -25,7 +25,7 @@ interface MenuItem {
 interface SectionItem {
   id: number;
   name: string;
-  items: MenuItem[]; 
+  items: MenuItem[];
 }
 
 interface MainContentProps {
@@ -35,10 +35,15 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false);
+  const [isBasketButtonVisible, setIsBasketButtonVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsBasketButtonVisible(cart.length > 0);
+  }, [cart]);
 
   const handleAddToCart = (itemId: number, name: string, price: number, quantity: number) => {
     setCart((prev) => {
@@ -60,9 +65,12 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
 
   const handleUpdateCartQuantity = (itemId: number, amount: number) => {
     setCart((prev) => {
-      return prev.map((item) =>
-        item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
-      ).filter(item => item.quantity > 0);
+      const updatedCart = prev
+        .map((item) =>
+          item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
+        )
+        .filter(item => item.quantity > 0);
+      return updatedCart;
     });
   };
 
@@ -89,7 +97,15 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
   };
 
   const handleCheckout = () => {
-    console.log(t("checkout_initiated")); // Usa a função de tradução
+    console.log(t("checkout_initiated")); 
+  };
+
+  const handleCloseCartModal = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const handleBasketButtonClick = () => {
+    setIsCartModalOpen(true);
   };
 
   return (
@@ -115,7 +131,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
               </div>
             ))}
           </div>
-          
+
           <div className="tab-content">
             {getFilteredSections(sections[activeTab].name).map(section => (
               <MenuSection
@@ -154,17 +170,25 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
 
           <CartModal
             isOpen={isCartModalOpen}
-            onClose={() => setIsCartModalOpen(false)}
+            onClose={handleCloseCartModal}
             cart={cart}
             handleUpdateCartQuantity={handleUpdateCartQuantity}
             calculateSubtotal={calculateSubtotal}
             calculateTotal={calculateTotal}
             onCheckout={handleCheckout}
           />
+          
+          {isBasketButtonVisible && (
+            <div className="content-button-your-basket">
+            <button className="basket-button" onClick={handleBasketButtonClick}>
+              {t('your_basket')} • {cart.length} {t('item')}
+            </button>
+            </div>
+          )}
         </>
       )}
 
-      <div className={`card-container-wrapper ${isMobile ? 'mobile' : ''}`}>
+      <div className="card-container-wrapper">
         <div className="card-container">
           <Card
             title=""
@@ -187,7 +211,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                       </div>
                     ))}
                   </div>
-                  
+
                   <div className="tab-content">
                     {getFilteredSections(sections[activeTab].name).map(section => (
                       <MenuSection
@@ -238,12 +262,12 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
               )
             }
             width={isMobile ? '100%' : '600px'}
-            height={isMobile ? 'auto' : 'auto'}
+            height={isMobile ? 'auto' : 'auto'}            
             opacity={1}
             mobile={isMobile}
           />
 
-          <div className="main-content">
+<div className="main-content">
             {!isMobile && (
               <Card
                 title={t('cart')}

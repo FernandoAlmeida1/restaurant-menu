@@ -18,5 +18,6 @@
   "cart_empty_message": "Your cart is empty",
   "subtotal": "Subtotal",
   "total": "Total",
-  "checkout_now": "Checkout Now"
+  "checkout_now": "Checkout Now",
+  "your_basket": "Your Basket"
 }
