@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from 'react-i18next'; // Importa o hook useTranslation
+import { useTranslation } from 'react-i18next';
 import Modal from "../Modal/Modal";
 import './MenuSection.css';
 
@@ -16,13 +16,13 @@ interface MenuSectionProps {
   items: MenuItem[];
   handleAddToCart: (itemId: number, name: string, price: number, quantity: number) => void;
   isMobile?: boolean;
+  cartItems: { [key: number]: number };
 }
 
-const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart }) => {
+const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart, isMobile, cartItems }) => {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState<null | MenuItem>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addedItems, setAddedItems] = useState<number[]>([]);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);
@@ -35,12 +35,15 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
   };
 
   const handleAddToOrder = (itemId: number, quantity: number) => {
-    setAddedItems((prev) => [...prev, itemId]); 
     const item = items.find((item) => item.id === itemId);
     if (item) {
       handleAddToCart(item.id, item.name, item.price, quantity);
     }
     closeModal();
+  };
+
+  const getItemQuantity = (itemId: number) => {
+    return cartItems[itemId] || 0;
   };
 
   return (
@@ -51,9 +54,9 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
           <div key={item.id} className="menu-item" onClick={() => handleItemClick(item)}>
             <div className="menu-item-details">
               <h4 className="menu-item-name">
-                {addedItems.includes(item.id) && (
+                {getItemQuantity(item.id) > 0 && (
                   <span className="item-quantity-circle">
-                    {addedItems.filter(id => id === item.id).length}
+                    {getItemQuantity(item.id)}
                   </span>
                 )}
                 {item.name}
@@ -73,7 +76,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ name, items, handleAddToCart 
       ) : (
         <p>{t('no_items_available')}</p>
       )}
-  
+
       <Modal isOpen={isModalOpen} onClose={closeModal} item={selectedItem} onAddToOrder={handleAddToOrder} />
     </div>
   );

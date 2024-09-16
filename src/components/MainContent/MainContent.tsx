@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import MenuSection from '../MenuSection/MenuSection';
-import Card from '../Card/Card';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import MenuSection from "../MenuSection/MenuSection";
+import Card from "../Card/Card";
 import Cart from "../Cart/Cart";
-import CartModal from '../CartModal/CartModal';
-import Collapse from '../Collapse/Collapse';
-import './MainContent.css';
+import CartModal from "../CartModal/CartModal";
+import Collapse from "../Collapse/Collapse";
+import "./MainContent.css";
 
 interface CartItem {
   id: number;
@@ -34,18 +34,28 @@ interface MainContentProps {
   isMobile: boolean;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMobile }) => {
+const MainContent: React.FC<MainContentProps> = ({
+  tabValue,
+  filteredMenu,
+  isMobile,
+}) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState<boolean>(false);
-  const [isBasketButtonVisible, setIsBasketButtonVisible] = useState<boolean>(false);
+  const [isBasketButtonVisible, setIsBasketButtonVisible] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setIsBasketButtonVisible(cart.length > 0);
   }, [cart]);
 
-  const handleAddToCart = (itemId: number, name: string, price: number, quantity: number) => {
+  const handleAddToCart = (
+    itemId: number,
+    name: string,
+    price: number,
+    quantity: number
+  ) => {
     setCart((prev) => {
       const existingItem = prev.find((cartItem) => cartItem.id === itemId);
       let updatedCart;
@@ -67,15 +77,20 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     setCart((prev) => {
       const updatedCart = prev
         .map((item) =>
-          item.id === itemId ? { ...item, quantity: item.quantity + amount } : item
+          item.id === itemId
+            ? { ...item, quantity: item.quantity + amount }
+            : item
         )
-        .filter(item => item.quantity > 0);
+        .filter((item) => item.quantity > 0);
       return updatedCart;
     });
   };
 
   const calculateSubtotal = () => {
-    return cart.reduce((subtotal, item) => subtotal + item.price * item.quantity, 0);
+    return cart.reduce(
+      (subtotal, item) => subtotal + item.price * item.quantity,
+      0
+    );
   };
 
   const calculateTotal = () => {
@@ -87,17 +102,31 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
   };
 
   const sections = [
-    { name: t('burgers'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe4c64a6f.png' },
-    { name: t('drinks'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png' },
-    { name: t('desserts'), image: 'https://preodemo.gumlet.io/usr/venue/7602/section/646fbe93cb615.png' }
+    {
+      name: t("burgers"),
+      image:
+        "https://preodemo.gumlet.io/usr/venue/7602/section/646fbe4c64a6f.png",
+    },
+    {
+      name: t("drinks"),
+      image:
+        "https://preodemo.gumlet.io/usr/venue/7602/section/646fbe5dc1bf3.png",
+    },
+    {
+      name: t("desserts"),
+      image:
+        "https://preodemo.gumlet.io/usr/venue/7602/section/646fbe93cb615.png",
+    },
   ];
 
   const getFilteredSections = (name: string): SectionItem[] => {
-    return filteredMenu?.sections?.filter(section => section.name === name) || [];
+    return (
+      filteredMenu?.sections?.filter((section) => section.name === name) || []
+    );
   };
 
   const handleCheckout = () => {
-    console.log(t("checkout_initiated")); 
+    console.log(t("checkout_initiated"));
   };
 
   const handleCloseCartModal = () => {
@@ -108,10 +137,23 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
     setIsCartModalOpen(true);
   };
 
+  const cartItems = cart.reduce((acc, item) => {
+    acc[item.id] = item.quantity;
+    return acc;
+  }, {} as { [key: number]: number });
+
   return (
-    <div className={`main-content-container ${isMobile ? 'mobile' : ''}`}>
-      {tabValue === 1 && <section><h2>{t('login')}</h2></section>}
-      {tabValue === 2 && <section><h2>{t('contact')}</h2></section>}
+    <div className={`main-content-container ${isMobile ? "mobile" : ""}`}>
+      {tabValue === 1 && (
+        <section>
+          <h2>{t("login")}</h2>
+        </section>
+      )}
+      {tabValue === 2 && (
+        <section>
+          <h2>{t("contact")}</h2>
+        </section>
+      )}
 
       {isMobile && (
         <>
@@ -119,7 +161,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             {sections.map((section, index) => (
               <div
                 key={index}
-                className={`tab ${activeTab === index ? 'active' : ''}`}
+                className={`tab ${activeTab === index ? "active" : ""}`}
                 onClick={() => handleTabChange(index)}
               >
                 <img
@@ -133,37 +175,40 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
           </div>
 
           <div className="tab-content">
-            {getFilteredSections(sections[activeTab].name).map(section => (
+            {getFilteredSections(sections[activeTab].name).map((section) => (
               <MenuSection
                 key={section.id}
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
                 handleAddToCart={handleAddToCart}
+                cartItems={cartItems}
               />
             ))}
           </div>
 
-          <Collapse title={t('burgers')}>
-            {getFilteredSections(t('burgers')).map(section => (
+          <Collapse title={t("burgers")}>
+            {getFilteredSections(t("burgers")).map((section) => (
               <MenuSection
                 key={section.id}
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
                 handleAddToCart={handleAddToCart}
+                cartItems={cartItems}
               />
             ))}
           </Collapse>
 
-          <Collapse title={t('drinks')}>
-            {getFilteredSections(t('drinks')).map(section => (
+          <Collapse title={t("drinks")}>
+            {getFilteredSections(t("drinks")).map((section) => (
               <MenuSection
                 key={section.id}
                 name={section.name}
                 items={section.items}
                 isMobile={isMobile}
                 handleAddToCart={handleAddToCart}
+                cartItems={cartItems}
               />
             ))}
           </Collapse>
@@ -177,12 +222,15 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
             calculateTotal={calculateTotal}
             onCheckout={handleCheckout}
           />
-          
+
           {isBasketButtonVisible && (
             <div className="content-button-your-basket">
-            <button className="basket-button" onClick={handleBasketButtonClick}>
-              {t('your_basket')} • {cart.length} {t('item')}
-            </button>
+              <button
+                className="basket-button"
+                onClick={handleBasketButtonClick}
+              >
+                {t("your_basket")} • {cart.length} {t("item")}
+              </button>
             </div>
           )}
         </>
@@ -199,7 +247,7 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     {sections.map((section, index) => (
                       <div
                         key={index}
-                        className={`tab ${activeTab === index ? 'active' : ''}`}
+                        className={`tab ${activeTab === index ? "active" : ""}`}
                         onClick={() => handleTabChange(index)}
                       >
                         <img
@@ -213,64 +261,71 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                   </div>
 
                   <div className="tab-content">
-                    {getFilteredSections(sections[activeTab].name).map(section => (
+                    {getFilteredSections(sections[activeTab].name).map(
+                      (section) => (
+                        <MenuSection
+                          key={section.id}
+                          name={section.name}
+                          items={section.items}
+                          isMobile={isMobile}
+                          handleAddToCart={handleAddToCart}
+                          cartItems={cartItems}
+                        />
+                      )
+                    )}
+                  </div>
+
+                  <Collapse title={t("burgers")}>
+                    {getFilteredSections(t("burgers")).map((section) => (
+                      <MenuSection
+                        key={section.id}
+                        items={section.items}
+                        isMobile={isMobile}
+                        handleAddToCart={handleAddToCart}
+                        cartItems={cartItems}
+                      />
+                    ))}
+                  </Collapse>
+
+                  <Collapse title={t("drinks")}>
+                    {getFilteredSections(t("drinks")).map((section) => (
+                      <MenuSection
+                        key={section.id}
+                        items={section.items}
+                        isMobile={isMobile}
+                        handleAddToCart={handleAddToCart}
+                        cartItems={cartItems}
+                      />
+                    ))}
+                  </Collapse>
+                </div>
+              ) : (
+                <div className="tab-content">
+                  {getFilteredSections(sections[activeTab].name).map(
+                    (section) => (
                       <MenuSection
                         key={section.id}
                         name={section.name}
                         items={section.items}
                         isMobile={isMobile}
                         handleAddToCart={handleAddToCart}
+                        cartItems={cartItems}
                       />
-                    ))}
-                  </div>
-
-                  <Collapse title={t('burgers')}>
-                    {getFilteredSections(t('burgers')).map(section => (
-                      <MenuSection
-                        key={section.id}
-                        items={section.items}
-                        isMobile={isMobile}
-                        handleAddToCart={handleAddToCart}
-                      />
-                    ))}
-                  </Collapse>
-
-                  <Collapse title={t('drinks')}>
-                    {getFilteredSections(t('drinks')).map(section => (
-                      <MenuSection
-                        key={section.id}
-                        items={section.items}
-                        isMobile={isMobile}
-                        handleAddToCart={handleAddToCart}
-                      />
-                    ))}
-                  </Collapse>
-
-                </div>
-              ) : (
-                <div className="tab-content">
-                  {getFilteredSections(sections[activeTab].name).map(section => (
-                    <MenuSection
-                      key={section.id}
-                      name={section.name}
-                      items={section.items}
-                      isMobile={isMobile}
-                      handleAddToCart={handleAddToCart}
-                    />
-                  ))}
+                    )
+                  )}
                 </div>
               )
             }
-            width={isMobile ? '100%' : '600px'}
-            height={isMobile ? 'auto' : 'auto'}            
+            width={isMobile ? "100%" : "600px"}
+            height={isMobile ? "auto" : "auto"}
             opacity={1}
             mobile={isMobile}
           />
 
-<div className="main-content">
+          <div className="main-content">
             {!isMobile && (
               <Card
-                title={t('cart')}
+                title={t("cart")}
                 content={
                   <Cart
                     cart={cart}
@@ -279,9 +334,9 @@ const MainContent: React.FC<MainContentProps> = ({ tabValue, filteredMenu, isMob
                     calculateTotal={calculateTotal}
                   />
                 }
-                width={isMobile ? '100%' : '320px'}
-                height={isMobile ? 'auto' : 'auto'}
-                gap={isMobile ? '0' : '1px'}
+                width={isMobile ? "100%" : "320px"}
+                height={isMobile ? "auto" : "auto"}
+                gap={isMobile ? "0" : "1px"}
                 opacity={1}
                 mobile={isMobile}
               />
